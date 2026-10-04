@@ -45,8 +45,8 @@ jobs:
           rm -rf "$RUNNER_TEMP/launch" && cp -R Capkit/bin/Debug/osx-arm64 "$RUNNER_TEMP/launch"
           cd "$RUNNER_TEMP/launch"
           touch Portable
-          mkdir -p Capkit
-          echo '{ "ShowStartScreen": false }' > Capkit/ApplicationConfig.json
+          mkdir -p "Capkit Data"
+          echo '{ "ShowStartScreen": false }' > "Capkit Data/ApplicationConfig.json"
 
           ./Capkit > launch-output.txt 2>&1 &
           pid=$!
@@ -63,7 +63,7 @@ jobs:
           fi
 
           echo "::group::Console output"; cat launch-output.txt; echo "::endgroup::"
-          log=$(find Capkit/Logs -type f -name '*.txt' 2>/dev/null | head -1)
+          log=$(find "Capkit Data/Logs" -type f -name '*.txt' 2>/dev/null | head -1)
           echo "::group::Capkit log"; [ -n "$log" ] && cat "$log" || echo "No log file written."; echo "::endgroup::"
 
           test "$alive" = 1
@@ -77,5 +77,5 @@ jobs:
           path: |
             ${{ runner.temp }}/launch/launch-output.txt
             ${{ runner.temp }}/launch/launch-screen.png
-            ${{ runner.temp }}/launch/Capkit/Logs
+            ${{ runner.temp }}/launch/Capkit Data/Logs
           if-no-files-found: warn

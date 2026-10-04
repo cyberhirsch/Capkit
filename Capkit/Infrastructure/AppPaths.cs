@@ -39,7 +39,9 @@ internal static class AppPaths
 
     internal static readonly string DefaultPersonalFolder =
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationInfo.Name);
-    internal static readonly string PortablePersonalFolder = FileHelpers.GetAbsolutePath(ApplicationInfo.Name);
+    // Off Windows the executable has no extension and already takes the name "Capkit" in the app folder.
+    internal static readonly string PortablePersonalFolder = FileHelpers.GetAbsolutePath(
+        OperatingSystem.IsWindows() ? ApplicationInfo.Name : ApplicationInfo.Name + " Data");
     internal static readonly string PortableCheckFilePath = FileHelpers.GetAbsolutePath("Portable");
     internal static readonly string SteamInAppFilePath = FileHelpers.GetAbsolutePath("Steam");
 
