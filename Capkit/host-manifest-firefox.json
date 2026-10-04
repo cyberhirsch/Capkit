@@ -1,0 +1,9 @@
+﻿{
+  "name": "Capkit",
+  "description": "Capkit",
+  "path": "Capkit_NativeMessagingHost.exe",
+  "type": "stdio",
+  "allowed_extensions": [
+    "firefox@getcapkit.com"
+  ]
+}

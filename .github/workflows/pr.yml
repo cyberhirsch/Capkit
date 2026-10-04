@@ -1,4 +1,4 @@
-name: Build ShareX (PR)
+name: Build Capkit (PR)
 
 on:
   pull_request:
@@ -31,7 +31,7 @@ jobs:
             platform: ARM64
 
     env:
-      SOLUTION_FILE_PATH: ShareX.sln
+      SOLUTION_FILE_PATH: Capkit.sln
 
     steps:
       - name: Checkout
@@ -52,8 +52,8 @@ jobs:
         run: |
           dotnet restore --runtime "${{ env.RUNTIME_ID }}" "${{ env.SOLUTION_FILE_PATH }}"
           if ("${{ matrix.platform }}" -eq "ARM64") {
-            # ShareX.Setup always builds as x64, so restore win-x64 packages too
-            dotnet restore --runtime "win-x64" "ShareX.Setup\ShareX.Setup.csproj"
+            # Capkit.Setup always builds as x64, so restore win-x64 packages too
+            dotnet restore --runtime "win-x64" "Capkit.Setup\Capkit.Setup.csproj"
           }
 
       - name: Build

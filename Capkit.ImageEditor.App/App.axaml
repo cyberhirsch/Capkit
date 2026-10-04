@@ -1,0 +1,19 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Capkit.ImageEditor.App.App"
+             RequestedThemeVariant="Default">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://Capkit.Avalonia/Theming/CapkitTheme.axaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme />
+        <StyleInclude Source="avares://Capkit.Avalonia/Theming/ControlStyles.axaml"/>
+        <StyleInclude Source="avares://Capkit.Avalonia/Theming/ToolStyles.axaml"/>
+        <StyleInclude Source="avares://Capkit.ImageEditor/Presentation/Theming/EditorStyles.axaml"/>
+    </Application.Styles>
+</Application>

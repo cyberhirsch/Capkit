@@ -2,16 +2,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "C#: ShareX",
+            "name": "C#: Capkit",
             "type": "dotnet",
             "request": "launch",
-            "projectPath": "${workspaceFolder}/ShareX/ShareX.csproj"
+            "projectPath": "${workspaceFolder}/Capkit/Capkit.csproj"
         },
         {
-            "name": "C#: ShareX.ImageEditor.App",
+            "name": "C#: Capkit.ImageEditor.App",
             "type": "dotnet",
             "request": "launch",
-            "projectPath": "${workspaceFolder}/ShareX.ImageEditor.App/ShareX.ImageEditor.App.csproj"
+            "projectPath": "${workspaceFolder}/Capkit.ImageEditor.App/Capkit.ImageEditor.App.csproj"
         }
     ]
 }

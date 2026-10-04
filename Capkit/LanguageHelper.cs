@@ -1,0 +1,160 @@
+#region License Information (GPL v3)
+
+/*
+    Capkit - A program that allows you to take screenshots and share any file type
+    Copyright (c) 2007-2026 ShareX Team
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+    Optionally you can also view the license at <http://www.gnu.org/licenses/>.
+*/
+
+#endregion License Information (GPL v3)
+
+using Capkit.HelpersLib;
+using System.Globalization;
+using System.Threading;
+
+namespace Capkit
+{
+    public static class LanguageHelper
+    {
+        public static bool ChangeLanguage(SupportedLanguage language)
+        {
+            CultureInfo currentCulture;
+
+            if (language == SupportedLanguage.Automatic)
+            {
+                currentCulture = CultureInfo.InstalledUICulture;
+            }
+            else
+            {
+                string cultureName = GetCultureName(language);
+                currentCulture = CultureInfo.GetCultureInfo(cultureName);
+            }
+
+            if (!currentCulture.Equals(Thread.CurrentThread.CurrentUICulture))
+            {
+                Helpers.SetDefaultUICulture(currentCulture);
+                DebugHelper.WriteLine("Language changed to: " + currentCulture.DisplayName);
+
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public static string GetCultureName(SupportedLanguage language)
+        {
+            string cultureName;
+
+            switch (language)
+            {
+                case SupportedLanguage.Arabic:
+                    cultureName = "ar-YE";
+                    break;
+                case SupportedLanguage.Czech:
+                    cultureName = "cs-CZ";
+                    break;
+                case SupportedLanguage.Danish:
+                    cultureName = "da-DK";
+                    break;
+                case SupportedLanguage.Dutch:
+                    cultureName = "nl-NL";
+                    break;
+                default:
+                case SupportedLanguage.English:
+                    cultureName = "en-US";
+                    break;
+                case SupportedLanguage.French:
+                    cultureName = "fr-FR";
+                    break;
+                case SupportedLanguage.German:
+                    cultureName = "de-DE";
+                    break;
+                case SupportedLanguage.Hebrew:
+                    cultureName = "he-IL";
+                    break;
+                case SupportedLanguage.Hindi:
+                    cultureName = "hi-IN";
+                    break;
+                case SupportedLanguage.Hungarian:
+                    cultureName = "hu-HU";
+                    break;
+                case SupportedLanguage.Indonesian:
+                    cultureName = "id-ID";
+                    break;
+                case SupportedLanguage.Italian:
+                    cultureName = "it-IT";
+                    break;
+                case SupportedLanguage.Japanese:
+                    cultureName = "ja-JP";
+                    break;
+                case SupportedLanguage.Korean:
+                    cultureName = "ko-KR";
+                    break;
+                case SupportedLanguage.MexicanSpanish:
+                    cultureName = "es-MX";
+                    break;
+                case SupportedLanguage.Persian:
+                    cultureName = "fa-IR";
+                    break;
+                case SupportedLanguage.Polish:
+                    cultureName = "pl-PL";
+                    break;
+                case SupportedLanguage.Portuguese:
+                    cultureName = "pt-PT";
+                    break;
+                case SupportedLanguage.PortugueseBrazil:
+                    cultureName = "pt-BR";
+                    break;
+                case SupportedLanguage.Romanian:
+                    cultureName = "ro-RO";
+                    break;
+                case SupportedLanguage.Russian:
+                    cultureName = "ru-RU";
+                    break;
+                case SupportedLanguage.SimplifiedChinese:
+                    cultureName = "zh-CN";
+                    break;
+                case SupportedLanguage.Spanish:
+                    cultureName = "es-ES";
+                    break;
+                case SupportedLanguage.Swedish:
+                    cultureName = "sv-SE";
+                    break;
+                case SupportedLanguage.Thai:
+                    cultureName = "th-TH";
+                    break;
+                case SupportedLanguage.TraditionalChinese:
+                    cultureName = "zh-TW";
+                    break;
+                case SupportedLanguage.Turkish:
+                    cultureName = "tr-TR";
+                    break;
+                case SupportedLanguage.Ukrainian:
+                    cultureName = "uk-UA";
+                    break;
+                case SupportedLanguage.Vietnamese:
+                    cultureName = "vi-VN";
+                    break;
+            }
+
+            return cultureName;
+        }
+
+    }
+}

@@ -328,7 +328,7 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder
 .mfractor/
 
-# ShareX
+# Capkit
 Output/
 APIKeysLocal.cs
 ResXManager.config.xml

@@ -60,18 +60,18 @@ $localizedScriptPatterns = @{
 
 $projects = @(
     [pscustomobject]@{
-        Name = 'ShareX'
-        ResourceBaseName = 'ShareX.Localization.Strings'
+        Name = 'Capkit'
+        ResourceBaseName = 'Capkit.Localization.Strings'
         DynamicPrefixes = @()
     }
     [pscustomobject]@{
-        Name = 'ShareX.Avalonia'
-        ResourceBaseName = 'ShareX.AvaloniaUI.Localization.Strings'
+        Name = 'Capkit.Avalonia'
+        ResourceBaseName = 'Capkit.AvaloniaUI.Localization.Strings'
         DynamicPrefixes = @()
     }
     [pscustomobject]@{
-        Name = 'ShareX.HelpersLib'
-        ResourceBaseName = 'ShareX.HelpersLib.Localization.Strings'
+        Name = 'Capkit.HelpersLib'
+        ResourceBaseName = 'Capkit.HelpersLib.Localization.Strings'
         DynamicPrefixes = @(
             'AfterCaptureTasks_'
             'AfterUploadTasks_'
@@ -107,21 +107,21 @@ $projects = @(
         )
     }
     [pscustomobject]@{
-        Name = 'ShareX.HistoryLib'
-        ResourceBaseName = 'ShareX.HistoryLib.Localization.Strings'
+        Name = 'Capkit.HistoryLib'
+        ResourceBaseName = 'Capkit.HistoryLib.Localization.Strings'
         DynamicPrefixes = @()
     }
     [pscustomobject]@{
-        Name = 'ShareX.ImageEditor'
-        ResourceBaseName = 'ShareX.ImageEditor.Localization.Strings'
+        Name = 'Capkit.ImageEditor'
+        ResourceBaseName = 'Capkit.ImageEditor.Localization.Strings'
         DynamicPrefixes = @(
             'EffectBrowserPanel_Category_'
             'EffectBrowserPanel_Effect_'
         )
     }
     [pscustomobject]@{
-        Name = 'ShareX.ImageEffectsLib'
-        ResourceBaseName = 'ShareX.ImageEffectsLib.Localization.Strings'
+        Name = 'Capkit.ImageEffectsLib'
+        ResourceBaseName = 'Capkit.ImageEffectsLib.Localization.Strings'
         DynamicPrefixes = @(
             'ImageEffect_'
             'ImageEffectProperty_'
@@ -130,18 +130,18 @@ $projects = @(
         )
     }
     [pscustomobject]@{
-        Name = 'ShareX.ScreenCaptureLib'
-        ResourceBaseName = 'ShareX.ScreenCaptureLib.Localization.Strings'
+        Name = 'Capkit.ScreenCaptureLib'
+        ResourceBaseName = 'Capkit.ScreenCaptureLib.Localization.Strings'
         DynamicPrefixes = @()
     }
     [pscustomobject]@{
-        Name = 'ShareX.Tools'
-        ResourceBaseName = 'ShareX.Tools.Localization.Strings'
+        Name = 'Capkit.Tools'
+        ResourceBaseName = 'Capkit.Tools.Localization.Strings'
         DynamicPrefixes = @()
     }
     [pscustomobject]@{
-        Name = 'ShareX.UploadersLib'
-        ResourceBaseName = 'ShareX.UploadersLib.Localization.Strings'
+        Name = 'Capkit.UploadersLib'
+        ResourceBaseName = 'Capkit.UploadersLib.Localization.Strings'
         DynamicPrefixes = @(
             'AccountType_'
             'AmazonS3StorageClass_'
@@ -327,7 +327,7 @@ function Test-AllowedAxamlLiteral([string]$value)
     {
         return $true
     }
-    if ($value -match '^[A-Za-z]+(?:,[A-Za-z]+)+$' -or $value -match '^https?://example\.com/' -or $value -eq 'ShareX' -or $value -match '^[A-Z]$')
+    if ($value -match '^[A-Za-z]+(?:,[A-Za-z]+)+$' -or $value -match '^https?://example\.com/' -or $value -eq 'Capkit' -or $value -match '^[A-Z]$')
     {
         return $true
     }
@@ -394,7 +394,7 @@ else
     }
 }
 
-$languageHelperPath = Join-Path $repositoryDirectory 'ShareX\LanguageHelper.cs'
+$languageHelperPath = Join-Path $repositoryDirectory 'Capkit\LanguageHelper.cs'
 $languageHelperText = [IO.File]::ReadAllText($languageHelperPath)
 $actualApplicationCultures = @(
     [regex]::Matches($languageHelperText, 'cultureName\s*=\s*"([^"]+)"') |
@@ -606,7 +606,7 @@ foreach ($project in $projects)
             Add-ValidationError "$($project.Name): source contains an L() localization helper."
         }
 
-        if ($project.Name -eq 'ShareX.ImageEditor')
+        if ($project.Name -eq 'Capkit.ImageEditor')
         {
             foreach ($prefix in $project.DynamicPrefixes)
             {
@@ -657,7 +657,7 @@ foreach ($project in $projects)
                 Add-ValidationError "$($project.Name): effect-browser resources differ from the discovered effect catalog. Missing: $($missingKeys -join ', '); unexpected: $($unexpectedKeys -join ', ')."
             }
         }
-        elseif ($project.Name -eq 'ShareX.ImageEffectsLib')
+        elseif ($project.Name -eq 'Capkit.ImageEffectsLib')
         {
             foreach ($prefix in $project.DynamicPrefixes)
             {
@@ -671,7 +671,7 @@ foreach ($project in $projects)
                 Add-ValidationError "$($project.Name): data-driven image-effect resource lookup is missing."
             }
         }
-        elseif ($project.Name -eq 'ShareX.HelpersLib')
+        elseif ($project.Name -eq 'Capkit.HelpersLib')
         {
             if (-not $sourceText.Contains('GetLocalizedDescription(Localization.Strings.ResourceManager)') -or
                 -not $sourceText.Contains('GetLocalizedCategory(Localization.Strings.ResourceManager)'))
@@ -679,7 +679,7 @@ foreach ($project in $projects)
                 Add-ValidationError "$($project.Name): data-driven enum localization lookup is missing."
             }
         }
-        elseif ($project.Name -eq 'ShareX.UploadersLib')
+        elseif ($project.Name -eq 'Capkit.UploadersLib')
         {
             if (-not $sourceText.Contains('GetLocalizedDescription(Localization.Strings.ResourceManager)'))
             {
@@ -714,7 +714,7 @@ foreach ($project in $projects)
             }
         }
 
-        if ($project.Name -eq 'ShareX.ScreenCaptureLib')
+        if ($project.Name -eq 'Capkit.ScreenCaptureLib')
         {
             $formDirectory = Join-Path $projectDirectory 'Forms'
             $defaultFormFiles = @(

@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <Company>ShareX Team</Company>
-    <Product>ShareX</Product>
+    <Company>Capkit Team</Company>
+    <Product>Capkit</Product>
     <Copyright>Copyright (c) 2007-2026 ShareX Team</Copyright>
     <Version>21.0.0</Version>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>

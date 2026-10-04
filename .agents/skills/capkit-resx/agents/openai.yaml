@@ -1,0 +1,7 @@
+interface:
+  display_name: "Capkit RESX Translations"
+  short_description: "Translate Capkit RESX strings using batch helpers"
+  default_prompt: "Use $capkit-resx to translate the requested Capkit UI strings with the repository's batch helpers."
+
+policy:
+  allow_implicit_invocation: true

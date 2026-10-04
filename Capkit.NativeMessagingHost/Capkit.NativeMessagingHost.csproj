@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <BaseOutputPath>$(MSBuildThisFileDirectory)..\Capkit\bin\</BaseOutputPath>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>Capkit_NativeMessagingHost</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Capkit.HelpersLib\Capkit.HelpersLib.csproj" />
+  </ItemGroup>
+</Project>

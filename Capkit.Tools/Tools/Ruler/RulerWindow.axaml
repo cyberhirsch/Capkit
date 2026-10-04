@@ -1,0 +1,16 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:localization="using:Capkit.Tools.Localization"
+        xmlns:controls="using:Capkit.Tools.Controls"
+        x:Class="Capkit.Tools.RulerWindow"
+        Title="{x:Static localization:Strings.RulerWindow_Capkit_Ruler}"
+        CanResize="False"
+        ShowInTaskbar="False"
+        WindowDecorations="None"
+        TransparencyLevelHint="Transparent"
+        Background="Transparent"
+        FontFamily="{DynamicResource Capkit.FontFamily.Default}">
+
+    <controls:RulerOverlayControl x:Name="RulerOverlay"
+                                  AccentColor="{DynamicResource Capkit.Color.Accent.Start}"/>
+</Window>

@@ -1,4 +1,4 @@
-name: Build ShareX
+name: Build Capkit
 
 on:
   push:
@@ -39,7 +39,7 @@ jobs:
             platform: ARM64
 
     env:
-      SOLUTION_FILE_PATH: ShareX.sln
+      SOLUTION_FILE_PATH: Capkit.sln
       ASSEMBLY_INFO_PATH: Directory.build.props
       FFMPEG_VERSION: "8.1"
 
@@ -81,15 +81,15 @@ jobs:
         if: env.API_KEYS != ''
         working-directory: ${{ env.GITHUB_WORKSPACE }}
         run: |
-          $path = "ShareX.UploadersLib\APIKeys\APIKeysLocal.cs"
+          $path = "Capkit.UploadersLib\APIKeys\APIKeysLocal.cs"
           [System.IO.File]::WriteAllText($path, $env:API_KEYS, [System.Text.UTF8Encoding]::new($false))
 
       - name: Restore NuGet packages
         run: |
           dotnet restore --runtime "${{ env.RUNTIME_ID }}" "${{ env.SOLUTION_FILE_PATH }}"
           if ("${{ matrix.platform }}" -eq "ARM64") {
-            # ShareX.Setup always builds as x64, so restore win-x64 packages too
-            dotnet restore --runtime "win-x64" "ShareX.Setup\ShareX.Setup.csproj"
+            # Capkit.Setup always builds as x64, so restore win-x64 packages too
+            dotnet restore --runtime "win-x64" "Capkit.Setup\Capkit.Setup.csproj"
           }
 
       - name: Build
@@ -106,7 +106,7 @@ jobs:
           if ($null -eq $ffmpegPath) {
             throw "ffmpeg.exe was not found in the downloaded archive."
           }
-          $destinationPath = "${{ github.workspace }}\ShareX\bin\${{ matrix.configuration }}\${{ env.RUNTIME_ID }}\ffmpeg.exe"
+          $destinationPath = "${{ github.workspace }}\Capkit\bin\${{ matrix.configuration }}\${{ env.RUNTIME_ID }}\ffmpeg.exe"
           Copy-Item -LiteralPath $ffmpegPath.FullName -Destination $destinationPath -Force
 
       - name: Azure login
@@ -120,7 +120,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Sign ShareX binaries
+      - name: Sign Capkit binaries
         if: >-
           (github.ref == 'refs/heads/develop' && matrix.configuration == 'Release') ||
           (startsWith(github.ref, 'refs/tags/v') &&
@@ -130,8 +130,8 @@ jobs:
           endpoint: ${{ vars.SIGNING_ENDPOINT }}
           signing-account-name: ${{ vars.SIGNING_ACCOUNT_NAME }}
           certificate-profile-name: ${{ vars.CERTIFICATE_PROFILE_NAME }}
-          files-folder: ${{ github.workspace }}\ShareX\bin\${{ matrix.configuration }}\${{ env.RUNTIME_ID }}
-          files-folder-filter: ShareX*.exe,ShareX*.dll,ffmpeg.exe
+          files-folder: ${{ github.workspace }}\Capkit\bin\${{ matrix.configuration }}\${{ env.RUNTIME_ID }}
+          files-folder-filter: Capkit*.exe,Capkit*.dll,ffmpeg.exe
           file-digest: SHA256
           timestamp-rfc3161: http://timestamp.acs.microsoft.com
           timestamp-digest: SHA256
@@ -145,7 +145,7 @@ jobs:
           endpoint: ${{ vars.SIGNING_ENDPOINT }}
           signing-account-name: ${{ vars.SIGNING_ACCOUNT_NAME }}
           certificate-profile-name: ${{ vars.CERTIFICATE_PROFILE_NAME }}
-          files-folder: ${{ github.workspace }}\ShareX\bin\${{ matrix.configuration }}\${{ env.RUNTIME_ID }}
+          files-folder: ${{ github.workspace }}\Capkit\bin\${{ matrix.configuration }}\${{ env.RUNTIME_ID }}
           files-folder-filter: Avalonia*.dll
           file-digest: SHA256
           timestamp-rfc3161: http://timestamp.acs.microsoft.com
@@ -158,7 +158,7 @@ jobs:
           endpoint: ${{ vars.SIGNING_ENDPOINT }}
           signing-account-name: ${{ vars.SIGNING_ACCOUNT_NAME }}
           certificate-profile-name: ${{ vars.CERTIFICATE_PROFILE_NAME }}
-          files: ${{ github.workspace }}\ShareX.Steam\bin\Steam\ShareX_Launcher.exe
+          files: ${{ github.workspace }}\Capkit.Steam\bin\Steam\Capkit_Launcher.exe
           file-digest: SHA256
           timestamp-rfc3161: http://timestamp.acs.microsoft.com
           timestamp-digest: SHA256
@@ -166,13 +166,13 @@ jobs:
       - name: Build Setup (x64)
         if: matrix.platform == 'ARM64'
         run: |
-          # Build ShareX.Setup and its dependencies for x64 since it can't run as ARM64 on CI
-          dotnet build --configuration "${{ matrix.configuration }}" -p:Platform="x64" --self-contained true "ShareX.Setup\ShareX.Setup.csproj"
+          # Build Capkit.Setup and its dependencies for x64 since it can't run as ARM64 on CI
+          dotnet build --configuration "${{ matrix.configuration }}" -p:Platform="x64" --self-contained true "Capkit.Setup\Capkit.Setup.csproj"
 
       - name: Setup
         working-directory: ${{ env.GITHUB_WORKSPACE }}
         run: |
-          & "ShareX.Setup\bin\${{ matrix.configuration }}\win-x64\ShareX.Setup.exe" -silent -job "${{ matrix.configuration }}" -platform "${{ matrix.platform }}"
+          & "Capkit.Setup\bin\${{ matrix.configuration }}\win-x64\Capkit.Setup.exe" -silent -job "${{ matrix.configuration }}" -platform "${{ matrix.platform }}"
 
       - name: Sign setup
         if: >-
@@ -183,7 +183,7 @@ jobs:
           endpoint: ${{ vars.SIGNING_ENDPOINT }}
           signing-account-name: ${{ vars.SIGNING_ACCOUNT_NAME }}
           certificate-profile-name: ${{ vars.CERTIFICATE_PROFILE_NAME }}
-          files: ${{ github.workspace }}\Output\ShareX-${{ env.APP_VERSION }}-setup-${{ env.PLATFORM }}.exe
+          files: ${{ github.workspace }}\Output\Capkit-${{ env.APP_VERSION }}-setup-${{ env.PLATFORM }}.exe
           file-digest: SHA256
           timestamp-rfc3161: http://timestamp.acs.microsoft.com
           timestamp-digest: SHA256
@@ -193,84 +193,84 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: Setup-x64
-          path: Output\ShareX-${{ env.APP_VERSION }}-setup-${{ env.PLATFORM }}.exe
+          path: Output\Capkit-${{ env.APP_VERSION }}-setup-${{ env.PLATFORM }}.exe
 
       - name: Upload artifact (Setup-ARM64)
         if: matrix.configuration == 'Release' && matrix.platform == 'ARM64'
         uses: actions/upload-artifact@v7
         with:
           name: Setup-ARM64
-          path: Output\ShareX-${{ env.APP_VERSION }}-setup-${{ env.PLATFORM }}.exe
+          path: Output\Capkit-${{ env.APP_VERSION }}-setup-${{ env.PLATFORM }}.exe
 
       - name: Upload artifact (Portable-x64)
         if: matrix.configuration == 'Release' && matrix.platform == 'x64'
         uses: actions/upload-artifact@v7
         with:
           name: Portable-x64
-          path: Output\ShareX-${{ env.APP_VERSION }}-portable-${{ env.PLATFORM }}.zip
+          path: Output\Capkit-${{ env.APP_VERSION }}-portable-${{ env.PLATFORM }}.zip
 
       - name: Upload artifact (Portable-ARM64)
         if: matrix.configuration == 'Release' && matrix.platform == 'ARM64'
         uses: actions/upload-artifact@v7
         with:
           name: Portable-ARM64
-          path: Output\ShareX-${{ env.APP_VERSION }}-portable-${{ env.PLATFORM }}.zip
+          path: Output\Capkit-${{ env.APP_VERSION }}-portable-${{ env.PLATFORM }}.zip
 
       - name: Upload artifact (Debug-x64)
         if: matrix.configuration == 'Debug' && matrix.platform == 'x64'
         uses: actions/upload-artifact@v7
         with:
           name: Debug-x64
-          path: Output\ShareX-${{ env.APP_VERSION }}-debug-${{ env.PLATFORM }}.zip
+          path: Output\Capkit-${{ env.APP_VERSION }}-debug-${{ env.PLATFORM }}.zip
 
       - name: Upload artifact (Debug-ARM64)
         if: matrix.configuration == 'Debug' && matrix.platform == 'ARM64'
         uses: actions/upload-artifact@v7
         with:
           name: Debug-ARM64
-          path: Output\ShareX-${{ env.APP_VERSION }}-debug-${{ env.PLATFORM }}.zip
+          path: Output\Capkit-${{ env.APP_VERSION }}-debug-${{ env.PLATFORM }}.zip
 
       - name: Upload artifact (Steam-x64)
         if: matrix.configuration == 'Steam' && matrix.platform == 'x64'
         uses: actions/upload-artifact@v7
         with:
           name: Steam-x64
-          path: Output\ShareX-${{ env.APP_VERSION }}-Steam-${{ env.PLATFORM }}.zip
+          path: Output\Capkit-${{ env.APP_VERSION }}-Steam-${{ env.PLATFORM }}.zip
 
       - name: Upload artifact (Steam-ARM64)
         if: matrix.configuration == 'Steam' && matrix.platform == 'ARM64'
         uses: actions/upload-artifact@v7
         with:
           name: Steam-ARM64
-          path: Output\ShareX-${{ env.APP_VERSION }}-Steam-${{ env.PLATFORM }}.zip
+          path: Output\Capkit-${{ env.APP_VERSION }}-Steam-${{ env.PLATFORM }}.zip
 
       - name: Upload artifact (MicrosoftStore-x64)
         if: matrix.configuration == 'MicrosoftStore' && matrix.platform == 'x64'
         uses: actions/upload-artifact@v7
         with:
           name: MicrosoftStore-x64
-          path: Output\ShareX-${{ env.APP_VERSION }}-MicrosoftStore-${{ env.PLATFORM }}.appx
+          path: Output\Capkit-${{ env.APP_VERSION }}-MicrosoftStore-${{ env.PLATFORM }}.appx
 
       - name: Upload artifact (MicrosoftStore-ARM64)
         if: matrix.configuration == 'MicrosoftStore' && matrix.platform == 'ARM64'
         uses: actions/upload-artifact@v7
         with:
           name: MicrosoftStore-ARM64
-          path: Output\ShareX-${{ env.APP_VERSION }}-MicrosoftStore-${{ env.PLATFORM }}.appx
+          path: Output\Capkit-${{ env.APP_VERSION }}-MicrosoftStore-${{ env.PLATFORM }}.appx
 
       - name: Upload artifact (MicrosoftStoreDebug-x64)
         if: matrix.configuration == 'MicrosoftStoreDebug' && matrix.platform == 'x64'
         uses: actions/upload-artifact@v7
         with:
           name: MicrosoftStoreDebug-x64
-          path: Output\ShareX-${{ env.APP_VERSION }}-MicrosoftStore-debug-${{ env.PLATFORM }}.appx
+          path: Output\Capkit-${{ env.APP_VERSION }}-MicrosoftStore-debug-${{ env.PLATFORM }}.appx
 
       - name: Upload artifact (MicrosoftStoreDebug-ARM64)
         if: matrix.configuration == 'MicrosoftStoreDebug' && matrix.platform == 'ARM64'
         uses: actions/upload-artifact@v7
         with:
           name: MicrosoftStoreDebug-ARM64
-          path: Output\ShareX-${{ env.APP_VERSION }}-MicrosoftStore-debug-${{ env.PLATFORM }}.appx
+          path: Output\Capkit-${{ env.APP_VERSION }}-MicrosoftStore-debug-${{ env.PLATFORM }}.appx
 
   release:
     name: Release
@@ -392,23 +392,23 @@ jobs:
           repository: ${{ env.REPO_DEV_BUILDS }}
           token: ${{ env.CUSTOM_GITHUB_TOKEN }}
           tag_name: v${{ env.APP_VERSION }}
-          name: ShareX ${{ env.APP_VERSION }} Dev
+          name: Capkit ${{ env.APP_VERSION }} Dev
           body_path: ${{ env.RELEASE_BODY_PATH }}
           draft: false
           prerelease: false
           files: |
-            Output/ShareX-${{ env.APP_VERSION }}-setup-x64.exe
-            # Output/ShareX-${{ env.APP_VERSION }}-setup-arm64.exe
-            Output/ShareX-${{ env.APP_VERSION }}-portable-x64.zip
-            # Output/ShareX-${{ env.APP_VERSION }}-portable-arm64.zip
-            Output/ShareX-${{ env.APP_VERSION }}-debug-x64.zip
-            Output/ShareX-${{ env.APP_VERSION }}-debug-arm64.zip
-            Output/ShareX-${{ env.APP_VERSION }}-Steam-x64.zip
-            # Output/ShareX-${{ env.APP_VERSION }}-Steam-arm64.zip
-            Output/ShareX-${{ env.APP_VERSION }}-MicrosoftStore-x64.appx
-            Output/ShareX-${{ env.APP_VERSION }}-MicrosoftStore-arm64.appx
-            Output/ShareX-${{ env.APP_VERSION }}-MicrosoftStore-debug-x64.appx
-            Output/ShareX-${{ env.APP_VERSION }}-MicrosoftStore-debug-arm64.appx
+            Output/Capkit-${{ env.APP_VERSION }}-setup-x64.exe
+            # Output/Capkit-${{ env.APP_VERSION }}-setup-arm64.exe
+            Output/Capkit-${{ env.APP_VERSION }}-portable-x64.zip
+            # Output/Capkit-${{ env.APP_VERSION }}-portable-arm64.zip
+            Output/Capkit-${{ env.APP_VERSION }}-debug-x64.zip
+            Output/Capkit-${{ env.APP_VERSION }}-debug-arm64.zip
+            Output/Capkit-${{ env.APP_VERSION }}-Steam-x64.zip
+            # Output/Capkit-${{ env.APP_VERSION }}-Steam-arm64.zip
+            Output/Capkit-${{ env.APP_VERSION }}-MicrosoftStore-x64.appx
+            Output/Capkit-${{ env.APP_VERSION }}-MicrosoftStore-arm64.appx
+            Output/Capkit-${{ env.APP_VERSION }}-MicrosoftStore-debug-x64.appx
+            Output/Capkit-${{ env.APP_VERSION }}-MicrosoftStore-debug-arm64.appx
 
       - name: Release (Stable)
         if: startsWith(github.ref, 'refs/tags/v')
@@ -417,12 +417,12 @@ jobs:
           repository: ${{ github.repository }}
           token: ${{ github.token }}
           tag_name: ${{ github.ref_name }}
-          name: ShareX ${{ env.APP_VERSION }}
+          name: Capkit ${{ env.APP_VERSION }}
           body_path: ${{ env.RELEASE_BODY_PATH }}
           draft: true
           prerelease: true
           files: |
-            Output/ShareX-${{ env.APP_VERSION }}-setup-x64.exe
-            # Output/ShareX-${{ env.APP_VERSION }}-setup-arm64.exe
-            Output/ShareX-${{ env.APP_VERSION }}-portable-x64.zip
-            # Output/ShareX-${{ env.APP_VERSION }}-portable-arm64.zip
+            Output/Capkit-${{ env.APP_VERSION }}-setup-x64.exe
+            # Output/Capkit-${{ env.APP_VERSION }}-setup-arm64.exe
+            Output/Capkit-${{ env.APP_VERSION }}-portable-x64.zip
+            # Output/Capkit-${{ env.APP_VERSION }}-portable-arm64.zip

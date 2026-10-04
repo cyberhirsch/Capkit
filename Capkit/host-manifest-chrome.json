@@ -1,0 +1,9 @@
+﻿{
+  "name": "com.getcapkit.capkit",
+  "description": "Capkit",
+  "path": "Capkit_NativeMessagingHost.exe",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://nlkoigbdolhchiicbonbihbphgamnaoc/"
+  ]
+}

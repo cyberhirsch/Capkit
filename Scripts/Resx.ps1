@@ -1,15 +1,15 @@
 #requires -Version 7.2
 <#
 .SYNOPSIS
-Export, find, import, or check ShareX translation strings without loading whole catalogs into an agent's context.
+Export, find, import, or check Capkit translation strings without loading whole catalogs into an agent's context.
 .EXAMPLE
-pwsh -File Scripts/Resx.ps1 export -Project ShareX.Tools -Prefix AnimatedGifTrimmer_ -Path artifacts/gif.json
+pwsh -File Scripts/Resx.ps1 export -Project Capkit.Tools -Prefix AnimatedGifTrimmer_ -Path artifacts/gif.json
 .EXAMPLE
 pwsh -File Scripts/Resx.ps1 find -Text 'Pause' -Culture tr,fr
 .EXAMPLE
 pwsh -File Scripts/Resx.ps1 import -Path artifacts/gif.json -WhatIf
 .EXAMPLE
-pwsh -File Scripts/Resx.ps1 check -Project ShareX.Tools -Prefix AnimatedGifTrimmer_
+pwsh -File Scripts/Resx.ps1 check -Project Capkit.Tools -Prefix AnimatedGifTrimmer_
 #>
 [CmdletBinding(SupportsShouldProcess)]
 param(

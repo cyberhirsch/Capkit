@@ -58,23 +58,23 @@ Keep $filename$ &amp; text</value><comment>A multiline filename message.</commen
 </root>
 '@
 $reuseXml = '<root><data name="Reusable_Pause" xml:space="preserve"><value>Pause</value></data></root>'
-foreach ($projectName in @('ShareX', 'ShareX.Tools'))
+foreach ($projectName in @('Capkit', 'Capkit.Tools'))
 {
     $folder = Join-Path $testRoot "$projectName/Localization"
     $null = [IO.Directory]::CreateDirectory($folder)
-    [IO.File]::WriteAllText((Join-Path $folder 'Strings.resx'), $(if ($projectName -eq 'ShareX.Tools') { $sourceXml } else { $reuseXml }), $encoding)
+    [IO.File]::WriteAllText((Join-Path $folder 'Strings.resx'), $(if ($projectName -eq 'Capkit.Tools') { $sourceXml } else { $reuseXml }), $encoding)
     foreach ($cultureName in @('fr', 'tr'))
     {
         $pause = if ($cultureName -eq 'fr') { 'Mettre en pause' } else { 'Duraklat' }
         $ready = if ($cultureName -eq 'fr') { 'Prêt' } else { 'Hazır' }
-        $localized = if ($projectName -eq 'ShareX.Tools')
+        $localized = if ($projectName -eq 'Capkit.Tools')
         { "<root><!-- retain localized comment --><metadata name=`"Fixture`"><value>unchanged</value></metadata><data name=`"Widget_Ready`" xml:space=`"preserve`"><value>$ready</value></data><data name=`"TypedAsset`" type=`"System.String`"><value>leave this typed resource alone</value></data></root>" }
         else { "<root><data name=`"Reusable_Pause`" xml:space=`"preserve`"><value>$pause</value></data></root>" }
         [IO.File]::WriteAllText((Join-Path $folder "Strings.$cultureName.resx"), $localized, $encoding)
     }
 }
 $batchPath = Join-Path $testRoot 'batch.json'
-& $helper export -RepositoryRoot $testRoot -Project ShareX.Tools -Prefix Widget_ -Path $batchPath | Out-Null
+& $helper export -RepositoryRoot $testRoot -Project Capkit.Tools -Prefix Widget_ -Path $batchPath | Out-Null
 $batch = Read-TranslationBatch $batchPath
 Assert ($batch['entries'].Count -eq 2) 'Export should select only the missing keys'
 $message = $batch['entries'][0]; $pauseEntry = $batch['entries'][1]
@@ -89,7 +89,7 @@ Assert ($found.Count -eq 1 -and $found[0]['source'] -ceq 'Pause') 'Lookup should
 Assert ($found[0]['translations']['tr'] -ceq 'Duraklat') 'Lookup should retrieve the selected culture'
 $message['translations']['fr'] = "Enregistrer {0}`nConserver `$filename`$ & l’image <originale>"
 $message['translations']['tr'] = "Kaydet {0}`n`$filename`$ & özgün <görüntü> korunsun"
-$pauseEntry['reuseFrom'] = @{ project = 'ShareX'; key = 'Reusable_Pause' }
+$pauseEntry['reuseFrom'] = @{ project = 'Capkit'; key = 'Reusable_Pause' }
 Write-Json $batch
 $before = Get-Snapshot
 & $helper import -RepositoryRoot $testRoot -Path $batchPath -WhatIf | Out-Null
@@ -101,7 +101,7 @@ $partial['entries'][1].Remove('reuseFrom') | Out-Null
 Write-Json $partial
 & $helper import -RepositoryRoot $testRoot -Path $batchPath | Out-Null
 $pendingPath = Join-Path $testRoot 'pending.json'
-& $helper export -RepositoryRoot $testRoot -Project ShareX.Tools -Prefix Widget_ -Path $pendingPath | Out-Null
+& $helper export -RepositoryRoot $testRoot -Project Capkit.Tools -Prefix Widget_ -Path $pendingPath | Out-Null
 $pending = (Read-TranslationBatch $pendingPath)['entries']
 Assert ($pending[0]['translations'].Count -eq 1 -and $pending[0]['translations'].Contains('tr')) 'Export should omit an already completed locale'
 Assert ($pending[1]['translations'].Count -eq 2) 'Unfilled entries should remain pending'
@@ -109,7 +109,7 @@ Write-Json $batch
 & $helper import -RepositoryRoot $testRoot -Path $batchPath | Out-Null
 foreach ($cultureName in @('fr', 'tr'))
 {
-    $catalogPath = Join-Path $testRoot "ShareX.Tools/Localization/Strings.$cultureName.resx"
+    $catalogPath = Join-Path $testRoot "Capkit.Tools/Localization/Strings.$cultureName.resx"
     $catalog = Read-TranslationResource $catalogPath
     Assert ($catalog.Values['Widget_Message'] -ceq $message['translations'][$cultureName]) 'Unicode, XML characters, placeholders, and newlines must round-trip'
     Assert ($catalog.Values['Widget_Pause'] -ceq $pauseEntry['reuseCandidates'][0]['translations'][$cultureName]) 'Selected translations should be reused'
@@ -121,17 +121,17 @@ foreach ($cultureName in @('fr', 'tr'))
     Assert (-not ($bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF)) 'Catalogs must not have a BOM'
     Assert ($text.EndsWith("`r`n") -and -not $text.Replace("`r`n", '').Contains("`n")) 'Catalogs must use CRLF'
 }
-foreach ($path in $before.Keys | Where-Object { $_ -notmatch 'ShareX.Tools[\\/]Localization[\\/]Strings\.(fr|tr)\.resx$' })
+foreach ($path in $before.Keys | Where-Object { $_ -notmatch 'Capkit.Tools[\\/]Localization[\\/]Strings\.(fr|tr)\.resx$' })
 { Assert ($before[$path] -ceq [Convert]::ToBase64String([IO.File]::ReadAllBytes($path))) 'Unselected catalogs must be unchanged' }
 $after = Get-Snapshot
 & $helper import -RepositoryRoot $testRoot -Path $batchPath | Out-Null
 Assert-Unchanged $after
-& $helper check -RepositoryRoot $testRoot -Project ShareX.Tools -Prefix Widget_ | Out-Null
-& $helper check -RepositoryRoot $testRoot -Project ShareX.Tools -Prefix Widget_ -Culture 'fr,tr' | Out-Null
-& $helper export -RepositoryRoot $testRoot -Project ShareX.Tools -Prefix Widget_ -Path $batchPath | Out-Null
+& $helper check -RepositoryRoot $testRoot -Project Capkit.Tools -Prefix Widget_ | Out-Null
+& $helper check -RepositoryRoot $testRoot -Project Capkit.Tools -Prefix Widget_ -Culture 'fr,tr' | Out-Null
+& $helper export -RepositoryRoot $testRoot -Project Capkit.Tools -Prefix Widget_ -Path $batchPath | Out-Null
 Assert ((Read-TranslationBatch $batchPath)['entries'].Count -eq 0) 'A completed scope should export an empty batch'
 
-& $helper export -RepositoryRoot $testRoot -Project ShareX.Tools -Key Widget_Message -IncludeExisting -Path $batchPath | Out-Null
+& $helper export -RepositoryRoot $testRoot -Project Capkit.Tools -Key Widget_Message -IncludeExisting -Path $batchPath | Out-Null
 $originalBatch = [IO.File]::ReadAllText($batchPath)
 function Fresh-Batch { ConvertFrom-Json -InputObject $originalBatch -AsHashtable }
 $invalid = Fresh-Batch
@@ -148,7 +148,7 @@ $invalid = Fresh-Batch
 $invalid['entries'][0]['translations']['zz'] = 'Invalid culture'
 Assert-Rejected $invalid 'Unknown batch culture'
 $invalid = Fresh-Batch
-$invalid['entries'][0]['project'] = '../ShareX.Tools'
+$invalid['entries'][0]['project'] = '../Capkit.Tools'
 Assert-Rejected $invalid 'Unknown batch project'
 $invalid = Fresh-Batch
 $invalid['entries'][0]['translations']['tr'] = 123
@@ -157,7 +157,7 @@ $invalid = Fresh-Batch
 $invalid['entries'] += $invalid['entries'][0]
 Assert-Rejected $invalid 'duplicate batch key'
 $invalid = Fresh-Batch
-$invalid['entries'][0]['reuseFrom'] = @{ project = 'ShareX.Tools'; key = 'Widget_Ready' }
+$invalid['entries'][0]['reuseFrom'] = @{ project = 'Capkit.Tools'; key = 'Widget_Ready' }
 Assert-Rejected $invalid 'same English source'
 $invalid = Fresh-Batch
 $invalid['entries'][0]['existing']['tr'] = 'An older translation'
@@ -175,14 +175,14 @@ $invalid['entries'][0]['key'] = 'widget_message'
 Assert-Rejected $invalid 'Unknown source key'
 $invalid = Fresh-Batch
 $invalid['entries'][0]['translations']['tr'] = 'Kaydet {0} ve $filename$'
-$typedPath = Join-Path $testRoot 'ShareX.Tools/Localization/Strings.tr.resx'
+$typedPath = Join-Path $testRoot 'Capkit.Tools/Localization/Strings.tr.resx'
 $typedCatalog = Read-TranslationResource $typedPath
 $typedCatalog.Nodes['Widget_Message'].SetAttribute('type', 'System.String')
 [IO.File]::WriteAllBytes($typedPath, (Format-TranslationResource $typedCatalog.Document))
 Assert-Rejected $invalid 'not a string'
 
 # The shared serializer should produce exactly the established repository format.
-$realPath = Join-Path $repositoryDirectory 'ShareX.Tools/Localization/Strings.tr.resx'
+$realPath = Join-Path $repositoryDirectory 'Capkit.Tools/Localization/Strings.tr.resx'
 $formatted = Format-TranslationResource (Read-TranslationResource $realPath).Document
 Assert ([Convert]::ToBase64String($formatted) -ceq [Convert]::ToBase64String([IO.File]::ReadAllBytes($realPath))) 'Formatting must match the existing formatter'
 Write-Output "RESX helper tests passed: $checks checks. Fixtures: $testRoot"
