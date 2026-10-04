@@ -1,139 +1,58 @@
-<p align="center"><a href="https://getsharex.com"><img src="https://getsharex.com/img/ShareX_Banner.png" alt="Capkit Banner"/></a></p>
-<h3 align="center">Screen capture, file sharing and productivity tool</h3>
-<br>
-<div align="center">
-  <a href="https://github.com/ShareX/ShareX/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/ShareX/ShareX/build.yml?branch=develop&label=Build&cacheSeconds=3600" alt="GitHub Workflow Status"/></a>
-  <a href="./LICENSE.txt"><img src="https://img.shields.io/github/license/ShareX/ShareX?label=License&color=brightgreen&cacheSeconds=3600" alt="License"/></a>
-  <a href="https://github.com/ShareX/ShareX/releases/latest"><img src="https://img.shields.io/github/v/release/ShareX/ShareX?label=Release&color=brightgreen&cacheSeconds=3600" alt="Release"/></a>
-  <a href="https://getsharex.com/downloads"><img src="https://img.shields.io/github/downloads/ShareX/ShareX/total?label=Downloads&cacheSeconds=3600" alt="Downloads"/></a>
-  <a href="https://discord.gg/ShareX"><img src="https://img.shields.io/discord/194170124859736065?label=Discord&cacheSeconds=3600" alt="Discord"/></a>
-  <a href="https://twitter.com/intent/follow?screen_name=ShareX"><img src="https://img.shields.io/twitter/follow/ShareX?cacheSeconds=3600" alt="Twitter"/></a>
-</div>
-<br>
-<p align="center"><a href="https://getsharex.com"><img src="https://getsharex.com/img/ShareX_Screenshot.png" alt="Capkit Screenshot"/></a></p>
-<p align="center">For further information please check our <a href="https://getsharex.com">website</a></p>
+# Capkit
 
-# Capkit - Free Screen Capture, Screenshot, File Sharing and Productivity Tool
+Screen capture, recording and sharing for Windows, with macOS in progress.
 
-Capkit is a free and open source screenshot tool, screen recorder, file sharing tool and productivity application for Windows. It is designed for users who need fast screen capture, powerful screenshot editing, automated sharing, custom upload destinations and practical utilities in one lightweight desktop app.
+Capkit is a free, open source desktop tool for taking screenshots, recording your screen, annotating the result and sending it where it needs to go. It has no ads and needs no account.
 
-With Capkit, you can capture any area of your screen, record video or GIFs, annotate screenshots, upload files, copy shareable links, extract text with OCR, scan QR codes, pick colors and run custom workflows from hotkeys. Capkit is built for speed and control: capture a screenshot, edit it, save it, copy it, upload it or pass it through your own task chain with minimal manual work.
+## How it is organised
 
-## Why Capkit?
+The main window is built around what you came to do:
 
-Capkit combines screen capture, screen recording, image editing, file uploading and automation features that are often split across multiple applications. It is completely free, open source, lightweight, privacy focused and has no advertisements. No account is required to use Capkit.
+* **Capture**: screenshots and recordings, the shortcuts that trigger them, and the pipeline that runs after each capture (annotate, add effects, save, copy, upload, copy link).
+* **Share**: upload files, folders, clipboard content, text and URLs, choose destinations and decide what happens after an upload.
+* **Tools**: colour picker, ruler, pin to screen, image editor, beautifier, background remover, OCR, QR codes, video and GIF tools and more, searchable in one grid.
+* **History**: everything you captured or uploaded, with quick actions.
 
-Capkit is especially useful for developers, designers, support teams, content creators, technical writers, QA testers and power users who frequently create screenshots, record short clips, share files or document workflows. It can be used as a simple screenshot app, but it also supports advanced workflows for users who want precise control over capture methods, after-capture tasks, upload destinations and hotkeys.
+Press **Ctrl+K** anywhere to search actions, tools, shortcuts and individual settings.
 
-## Screenshot and Screen Recording Features
+## Shortcuts that only change what they need
 
-Capkit supports many ways to capture your screen:
+Every hotkey is a shortcut with its own pipeline. A shortcut follows the default pipeline and keeps only the settings you change for it, for example a different save folder or uploading to another destination. Settings you did not change keep following the defaults, so adjusting the default pipeline updates every shortcut at once.
 
-* Fullscreen capture
-* Active window capture
-* Active monitor capture
-* Region capture
-* Scrolling screenshot capture
-* Last region capture
-* Custom region capture
-* Screen recording
-* GIF screen recording
-* Auto capture
+## Capture methods
 
-After capturing a screenshot or recording, Capkit can automatically copy the result to the clipboard, save it to a file, open it in the image editor, upload it, print it, show it in Windows Explorer, run an action, scan a QR code or recognize text with OCR. These after-capture tasks make Capkit a flexible screenshot workflow tool instead of only a basic snipping utility.
+Region, window, monitor, full screen, last region, custom region, scrolling capture, auto capture, screen recording (MP4) and GIF recording.
 
-## Region Capture and Annotation
+## Platforms
 
-Capkit region capture includes tools for selecting exactly what you want to capture and marking it before saving, copying or uploading. You can draw rectangles, ellipses, freehand lines, arrows, text, speech balloons, step numbers, highlights, blur effects, pixelation, magnification and spotlight effects.
+| Platform | Status |
+| --- | --- |
+| Windows 10 and 11 (x64, ARM64) | Main platform |
+| macOS 14 or later (Apple Silicon, Intel) | In progress: the app builds for macOS; capture through ScreenCaptureKit and global hotkeys are being implemented and tested |
 
-These annotation tools help create clear screenshots for bug reports, documentation, tutorials, support replies, pull requests and release notes. Sensitive information can be hidden with blur, pixelate or smart eraser tools before a screenshot is shared.
+## Building
 
-## Built-in Image Editor
+Requirements: the [.NET 10 SDK](https://dotnet.microsoft.com/download).
 
-The Capkit image editor lets you crop, annotate, redact, highlight and prepare screenshots after capture. It includes common editing tools such as shapes, arrows, text, freehand drawing, image insertion, cursor insertion, blur, pixelate, magnify, spotlight, crop, cut out, background editing and image effects.
+Windows:
 
-Because the editor is part of the capture workflow, you can take a screenshot, mark the important area, hide private details and then copy, save or upload the edited image without switching between separate apps.
+```
+dotnet build Capkit/Capkit.csproj -c Debug
+```
 
-## File Sharing and Upload Automation
+macOS (on a Mac this is the default platform; on Windows it compiles the macOS variant for checking):
 
-Capkit can upload images, text, files, folders, clipboard content and URLs to many different destinations. After uploading, it can automatically copy the URL to the clipboard, open the URL, shorten the URL, show a QR code or run other configured tasks.
+```
+native/macos/build.sh Capkit/bin/Debug/osx-arm64
+dotnet build Capkit/Capkit.csproj -c Debug -p:CapkitPlatform=macos -r osx-arm64
+```
 
-Advanced users can create custom uploaders for services that are not built in. Capkit also provides guides for destinations such as Amazon S3, Google Cloud Storage and Cloudflare R2, making it suitable for both personal screenshot sharing and team workflows where files need to be uploaded to controlled storage.
+The native macOS bridge (`native/macos`) needs Xcode command line tools. GitHub Actions builds both platforms on every push.
 
-## Productivity Tools
+## Credits
 
-Capkit includes many utilities that support everyday desktop work:
+Capkit is a fork of [ShareX](https://github.com/ShareX/ShareX) by the ShareX Team, modified and renamed. The original copyright notices are kept in the source files.
 
-* Color picker
-* Screen color picker
-* Ruler
-* Pin to screen
-* Image editor
-* Image beautifier
-* Image effects
-* Image viewer
-* Background remover
-* Image comparer
-* Image combiner
-* Image splitter
-* Image thumbnailer
-* Video converter
-* Video thumbnailer
-* Analyze image
-* OCR for recognizing text in images
-* QR code
-* Hash checker
-* Metadata viewer
-* Directory indexer
-* Clipboard viewer
-* Borderless window
-* Inspect window
-* Monitor test
+## License
 
-These tools make Capkit useful beyond screenshots. It can help inspect images, prepare assets, extract information, verify files and speed up repetitive tasks.
-
-## Custom Workflows and Hotkeys
-
-Capkit is built around configurable workflows. You can assign hotkeys to capture methods, choose what happens after capture, decide what happens after upload and create actions that run external tools or scripts. This makes it possible to build a workflow such as capture region, annotate image, save locally, upload to a destination, shorten the URL and copy the final link to the clipboard.
-
-The workflow system is one of the main reasons Capkit is popular with power users. Simple tasks can stay simple, while advanced users can automate detailed screenshot, screen recording and file sharing processes.
-
-## Download Capkit
-
-Capkit is available from the official website, GitHub releases, Microsoft Store and Steam. You can install the regular setup version, use a portable version or try development builds if you want the newest changes before a stable release.
-
-For the safest download options, use the official links below.
-
-## Links
-* Official website: https://getsharex.com
-* Downloads: https://getsharex.com/downloads
-* GitHub: https://github.com/ShareX/ShareX
-* Changelog: https://getsharex.com/changelog
-* Screenshots: https://getsharex.com/screenshots
-* Privacy policy: https://getsharex.com/privacy-policy
-* Donate: https://getsharex.com/donate
-* X: https://x.com/ShareX
-* Discord: https://discord.gg/ShareX
-* Reddit: https://www.reddit.com/r/sharex
-* Steam page: https://store.steampowered.com/app/400040/ShareX/
-* Microsoft Store page: https://apps.microsoft.com/detail/9nblggh4z1sp
-* Capkit related projects on GitHub: https://github.com/topics/sharex
-
-## Documents
-* Image effects: https://getsharex.com/image-effects
-* Actions: https://getsharex.com/actions
-* Dev builds: https://getsharex.com/docs/dev-builds
-* Keybinds: https://getsharex.com/docs/keybinds
-* Region capture: https://getsharex.com/docs/region-capture
-* Image editor: https://getsharex.com/docs/image-editor
-* Background remover: https://getsharex.com/docs/background-remover
-* Pin to screen: https://getsharex.com/docs/pin-to-screen
-* Scrolling screenshot: https://getsharex.com/docs/scrolling-screenshot
-* Command line arguments: https://getsharex.com/docs/command-line-arguments
-* Translation: https://getsharex.com/docs/translation
-* OCR: https://getsharex.com/docs/ocr
-* Custom uploader: https://getsharex.com/docs/custom-uploader
-* Amazon S3 guide: https://getsharex.com/docs/amazon-s3
-* Google Cloud Storage guide: https://getsharex.com/docs/google-cloud-storage
-* Cloudflare R2 guide: https://getsharex.com/docs/cloudflare-r2
-* Brand assets: https://getsharex.com/brand-assets
+GNU General Public License, version 2 or (at your option) any later version, as stated in the source file headers. The full text of version 3 is in [LICENSE.txt](LICENSE.txt).
