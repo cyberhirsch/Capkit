@@ -37,8 +37,10 @@ internal static class AppPaths
     internal const string HistoryFileNameOld = "History.json";
     internal const string LogsFolderName = "Logs";
 
-    internal static readonly string DefaultPersonalFolder =
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationInfo.Name);
+    // macOS keeps app data in Application Support; Documents is privacy-protected and would prompt on first use.
+    internal static readonly string DefaultPersonalFolder = OperatingSystem.IsMacOS()
+        ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "Application Support", ApplicationInfo.Name)
+        : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationInfo.Name);
     // Off Windows the executable has no extension and already takes the name "Capkit" in the app folder.
     internal static readonly string PortablePersonalFolder = FileHelpers.GetAbsolutePath(
         OperatingSystem.IsWindows() ? ApplicationInfo.Name : ApplicationInfo.Name + " Data");

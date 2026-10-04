@@ -79,3 +79,74 @@ jobs:
             ${{ runner.temp }}/launch/launch-screen.png
             ${{ runner.temp }}/launch/Capkit Data/Logs
           if-no-files-found: warn
+
+  package:
+    name: Package Capkit.app (${{ matrix.arch }})
+    runs-on: macos-15
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [arm64, x64]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Build native bridge
+        run: native/macos/build.sh native/macos/build
+
+      - name: Publish
+        run: |
+          dotnet publish Capkit/Capkit.csproj -c Release -p:CapkitPlatform=macos -r osx-${{ matrix.arch }} \
+            --self-contained true -o "$RUNNER_TEMP/publish"
+
+      - name: Create Capkit.app
+        run: |
+          version=$(dotnet msbuild Capkit/Capkit.csproj -getProperty:Version -p:CapkitPlatform=macos)
+          native/macos/package-app.sh "$RUNNER_TEMP/publish" "$RUNNER_TEMP/app" "$version"
+          du -sh "$RUNNER_TEMP/app/Capkit.app"
+
+      - name: Launch Capkit.app
+        if: matrix.arch == 'arm64'
+        run: |
+          data="$HOME/Library/Application Support/Capkit"
+          mkdir -p "$data"
+          echo '{ "ShowStartScreen": false }' > "$data/ApplicationConfig.json"
+
+          open "$RUNNER_TEMP/app/Capkit.app"
+          sleep 25
+          screencapture -x "$RUNNER_TEMP/app-screen.png" || true
+
+          pgrep -x Capkit > /dev/null && echo "Capkit.app is running." || { echo "Capkit.app is not running."; exit_code=1; }
+          pkill -x Capkit || true
+
+          log=$(find "$data/Logs" -type f -name '*.txt' 2>/dev/null | head -1)
+          echo "::group::Capkit log"; [ -n "$log" ] && cat "$log" || echo "No log file written."; echo "::endgroup::"
+          test -z "${exit_code:-}"
+          grep -q "Startup time" "$log"
+          ! grep -q "Exception" "$log"
+
+      - name: Zip
+        run: |
+          cd "$RUNNER_TEMP/app"
+          ditto -c -k --sequesterRsrc --keepParent Capkit.app "$RUNNER_TEMP/Capkit-macos-${{ matrix.arch }}.zip"
+
+      - name: Upload Capkit.app
+        uses: actions/upload-artifact@v4
+        with:
+          name: Capkit-app-macos-${{ matrix.arch }}
+          path: ${{ runner.temp }}/Capkit-macos-${{ matrix.arch }}.zip
+          if-no-files-found: error
+
+      - name: Upload launch screenshot
+        if: always() && matrix.arch == 'arm64'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Capkit-app-launch-screen
+          path: ${{ runner.temp }}/app-screen.png
+          if-no-files-found: warn

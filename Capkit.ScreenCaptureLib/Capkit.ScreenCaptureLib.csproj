@@ -26,6 +26,6 @@
   </ItemGroup>
   <!-- macOS: the ScreenCaptureKit bridge built by native/macos/build.sh, copied next to the app. -->
   <ItemGroup Condition="'$(CapkitPlatform)' == 'macos' and Exists('..\native\macos\build\libcapkit_mac.dylib')">
-    <None Include="..\native\macos\build\libcapkit_mac.dylib" Link="libcapkit_mac.dylib" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\native\macos\build\libcapkit_mac.dylib" Link="libcapkit_mac.dylib" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
