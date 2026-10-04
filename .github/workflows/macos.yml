@@ -59,7 +59,7 @@ jobs:
             kill "$pid"
           else
             alive=0
-            wait "$pid"; echo "Capkit exited early with code $?."
+            code=0; wait "$pid" || code=$?; echo "Capkit exited early with code $code."
           fi
 
           echo "::group::Console output"; cat launch-output.txt; echo "::endgroup::"
