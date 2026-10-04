@@ -29,6 +29,7 @@ using System.IO;
 
 namespace Capkit.HelpersLib
 {
+    /// <summary>Windows registry access. Off Windows, writes do nothing and reads return no value.</summary>
     public static class RegistryHelpers
     {
         public static void CreateRegistry(string path, string value, RegistryHive root = RegistryHive.CurrentUser)
@@ -38,6 +39,8 @@ namespace Capkit.HelpersLib
 
         public static void CreateRegistry(string path, string name, string value, RegistryHive root = RegistryHive.CurrentUser)
         {
+            if (!OperatingSystem.IsWindows()) return;
+
             using (RegistryKey rk = RegistryKey.OpenBaseKey(root, RegistryView.Default).CreateSubKey(path))
             {
                 if (rk != null)
@@ -54,6 +57,8 @@ namespace Capkit.HelpersLib
 
         public static void CreateRegistry(string path, string name, int value, RegistryHive root = RegistryHive.CurrentUser)
         {
+            if (!OperatingSystem.IsWindows()) return;
+
             using (RegistryKey rk = RegistryKey.OpenBaseKey(root, RegistryView.Default).CreateSubKey(path))
             {
                 if (rk != null)
@@ -65,6 +70,8 @@ namespace Capkit.HelpersLib
 
         public static void RemoveRegistry(string path, RegistryHive root = RegistryHive.CurrentUser)
         {
+            if (!OperatingSystem.IsWindows()) return;
+
             if (!string.IsNullOrEmpty(path))
             {
                 using (RegistryKey rk = RegistryKey.OpenBaseKey(root, RegistryView.Default))
@@ -119,6 +126,8 @@ namespace Capkit.HelpersLib
 
         public static string SearchProgramPath(string fileName)
         {
+            if (!OperatingSystem.IsWindows()) return null;
+
             // First method: HKEY_CLASSES_ROOT\Applications\{fileName}\shell\{command}\command
 
             string[] commands = new string[] { "open", "edit" };
