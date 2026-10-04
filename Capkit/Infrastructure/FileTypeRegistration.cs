@@ -31,7 +31,7 @@ internal static class FileTypeRegistration
     {
 #if !MicrosoftStore
         // Registry-based file associations are Windows-only; a Mac bundle declares its types in Info.plist.
-        if (StartupOptions.Portable || !OperatingSystem.IsWindows())
+        if (StartupOptions.Portable || !System.OperatingSystem.IsWindows())
         {
             return;
         }
