@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net10.0-windows10.0.22621.0</TargetFramework>
+    <TargetFramework Condition="'$(CapkitPlatform)' == 'windows'">net10.0-windows10.0.22621.0</TargetFramework>
+    <TargetFramework Condition="'$(CapkitPlatform)' != 'windows'">net10.0</TargetFramework>
     <OutputType>WinExe</OutputType>
     <ApplicationIcon>Capkit_Icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Description>Screen capture, file sharing and productivity tool</Description>
-    <SupportedOSPlatformVersion>10.0.22621.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="'$(CapkitPlatform)' == 'windows'">10.0.22621.0</SupportedOSPlatformVersion>
     <CETCompat>false</CETCompat>
   </PropertyGroup>
   <ItemGroup>
@@ -34,7 +35,7 @@
     <ProjectReference Include="..\Capkit.HistoryLib\Capkit.HistoryLib.csproj" />
     <ProjectReference Include="..\Capkit.ImageEditor\Capkit.ImageEditor.csproj" />
     <ProjectReference Include="..\Capkit.ImageEffectsLib\Capkit.ImageEffectsLib.csproj" />
-    <ProjectReference Include="..\Capkit.NativeMessagingHost\Capkit.NativeMessagingHost.csproj">
+    <ProjectReference Include="..\Capkit.NativeMessagingHost\Capkit.NativeMessagingHost.csproj" Condition="'$(CapkitPlatform)' == 'windows'">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
     </ProjectReference>

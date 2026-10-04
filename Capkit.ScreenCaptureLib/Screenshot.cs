@@ -60,24 +60,17 @@ namespace Capkit.ScreenCaptureLib
 
         public Bitmap CaptureWindow(IntPtr handle)
         {
-            if (handle.ToInt32() > 0)
+            if (handle.ToInt64() > 0)
             {
-                Rectangle rect;
-
-                if (CaptureClientArea)
-                {
-                    rect = NativeMethods.GetClientRect(handle);
-                }
-                else
-                {
-                    rect = CaptureHelpers.GetWindowRectangle(handle);
-                }
+                Rectangle rect = CaptureClientArea
+                    ? DesktopPlatform.Current.GetWindowClientRectangle(handle)
+                    : CaptureHelpers.GetWindowRectangle(handle);
 
                 bool isTaskbarHide = false;
 
                 try
                 {
-                    if (AutoHideTaskbar)
+                    if (AutoHideTaskbar && OperatingSystem.IsWindows())
                     {
                         isTaskbarHide = NativeMethods.SetTaskbarVisibilityIfIntersect(false, rect);
                     }
@@ -98,7 +91,7 @@ namespace Capkit.ScreenCaptureLib
 
         public Bitmap CaptureActiveWindow()
         {
-            IntPtr handle = NativeMethods.GetForegroundWindow();
+            IntPtr handle = DesktopPlatform.Current.GetForegroundWindow();
 
             return CaptureWindow(handle);
         }
@@ -112,57 +105,7 @@ namespace Capkit.ScreenCaptureLib
 
         private Bitmap CaptureRectangleNative(Rectangle rect, bool captureCursor = false)
         {
-            IntPtr handle = NativeMethods.GetDesktopWindow();
-            return CaptureRectangleNative(handle, rect, captureCursor);
-        }
-
-        private Bitmap CaptureRectangleNative(IntPtr handle, Rectangle rect, bool captureCursor = false)
-        {
-            if (rect.Width == 0 || rect.Height == 0)
-            {
-                return null;
-            }
-
-            if (HDRScreenshotColorCorrection)
-            {
-                Bitmap bitmap = CaptureRectangleGDI(handle, rect, false);
-
-                try
-                {
-                    HDRScreenCapture.ApplyColorCorrection(bitmap, rect);
-                }
-                catch (Exception e)
-                {
-                    DebugHelper.WriteException(e, "HDR screenshot color correction failed.");
-                }
-
-                if (captureCursor)
-                {
-                    try
-                    {
-                        CursorData cursorData = new CursorData();
-                        cursorData.DrawCursor(bitmap, rect.Location);
-                    }
-                    catch (Exception e)
-                    {
-                        DebugHelper.WriteException(e, "Cursor capture failed.");
-                    }
-                }
-
-                return bitmap;
-            }
-
-            return CaptureRectangleGDI(handle, rect, captureCursor);
-        }
-
-        private Bitmap CaptureRectangleGDI(IntPtr handle, Rectangle rect, bool captureCursor)
-        {
-            return WindowsImageInterop.Capture(rect, captureCursor ? dc =>
-            {
-                try { new CursorData().DrawCursor(dc, rect.Location); }
-                catch (Exception exception) { DebugHelper.WriteException(exception, "Cursor capture failed."); }
-            }
-            : null, handle);
+            return ScreenCapturer.Current.CaptureRectangle(rect, captureCursor, HDRScreenshotColorCorrection);
         }
     }
 }

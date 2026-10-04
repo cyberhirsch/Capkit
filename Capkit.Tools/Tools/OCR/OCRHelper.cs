@@ -24,10 +24,12 @@
 #endregion License Information (GPL v3)
 
 using Capkit.HelpersLib;
+#if WINDOWS
 using Windows.Globalization;
 using Windows.Graphics.Imaging;
 using Windows.Media.Ocr;
 using Windows.Storage.Streams;
+#endif
 using Bitmap = SkiaSharp.SKBitmap;
 using ImageFormat = SkiaSharp.SKEncodedImageFormat;
 
@@ -37,16 +39,25 @@ public static class OCRHelper
 {
     private const string SupportedVersion = "10.0.18362.0";
 
+#if WINDOWS
     public static bool IsSupported => Helpers.OSVersion >= new Version(SupportedVersion);
+#else
+    // macOS will use the Vision framework; until that engine exists OCR reports itself unavailable.
+    public static bool IsSupported => false;
+#endif
 
     public static OCRLanguageOption[] AvailableLanguages
     {
         get
         {
             ThrowIfNotSupported();
+#if WINDOWS
             return OcrEngine.AvailableRecognizerLanguages
                 .Select(x => new OCRLanguageOption(x.DisplayName, x.LanguageTag))
                 .ToArray();
+#else
+            return Array.Empty<OCRLanguageOption>();
+#endif
         }
     }
 
@@ -74,6 +85,10 @@ public static class OCRHelper
 
     private static async Task<string> OCRInternal(Bitmap bitmap, string languageTag, bool singleLine)
     {
+#if !WINDOWS
+        await Task.CompletedTask;
+        throw new PlatformNotSupportedException("OCR is not available on this platform yet.");
+#else
         Language language = new(languageTag);
         if (!OcrEngine.IsLanguageSupported(language))
         {
@@ -104,5 +119,6 @@ public static class OCRHelper
         }
 
         return string.Join(singleLine ? " " : Environment.NewLine, lines);
+#endif
     }
 }

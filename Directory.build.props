@@ -1,5 +1,13 @@
 <Project>
   <PropertyGroup>
+    <!-- The desktop this build targets. Defaults to the build machine; pass -p:CapkitPlatform=macos to compile the macOS variant on Windows. -->
+    <CapkitPlatform Condition="'$(CapkitPlatform)' == '' and $([MSBuild]::IsOSPlatform('Windows'))">windows</CapkitPlatform>
+    <CapkitPlatform Condition="'$(CapkitPlatform)' == ''">macos</CapkitPlatform>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(CapkitPlatform)' == 'macos'">
+    <DefineConstants>$(DefineConstants);CAPKIT_MACOS</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
     <Company>Capkit Team</Company>
     <Product>Capkit</Product>
     <Copyright>Copyright (c) 2007-2026 ShareX Team</Copyright>

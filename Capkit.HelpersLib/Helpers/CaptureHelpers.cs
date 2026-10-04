@@ -90,17 +90,12 @@ namespace Capkit.HelpersLib
 
         public static Point GetCursorPosition()
         {
-            if (NativeMethods.GetCursorPos(out POINT point))
-            {
-                return (Point)point;
-            }
-
-            return Point.Empty;
+            return DesktopPlatform.Current.GetCursorPosition();
         }
 
         public static void SetCursorPosition(int x, int y)
         {
-            NativeMethods.SetCursorPos(x, y);
+            DesktopPlatform.Current.SetCursorPosition(new Point(x, y));
         }
 
         public static void SetCursorPosition(Point position)
@@ -115,10 +110,7 @@ namespace Capkit.HelpersLib
 
         public static Color GetPixelColor(int x, int y)
         {
-            IntPtr hdc = NativeMethods.GetDC(IntPtr.Zero);
-            uint pixel = NativeMethods.GetPixel(hdc, x, y);
-            NativeMethods.ReleaseDC(IntPtr.Zero, hdc);
-            return Color.FromArgb((int)(pixel & 0x000000FF), (int)(pixel & 0x0000FF00) >> 8, (int)(pixel & 0x00FF0000) >> 16);
+            return DesktopPlatform.Current.GetPixelColor(new Point(x, y));
         }
 
         public static Color GetPixelColor(Point position)
@@ -289,40 +281,28 @@ namespace Capkit.HelpersLib
 
         public static Rectangle GetWindowRectangle(IntPtr handle)
         {
-            Rectangle rect = Rectangle.Empty;
-
-            if (NativeMethods.IsDWMEnabled() && NativeMethods.GetExtendedFrameBounds(handle, out Rectangle tempRect))
-            {
-                rect = tempRect;
-            }
-
-            if (rect.IsEmpty)
-            {
-                rect = NativeMethods.GetWindowRect(handle);
-            }
-
-            if (!Helpers.IsWindows10OrGreater() && NativeMethods.IsZoomed(handle))
-            {
-                rect = NativeMethods.MaximizedWindowFix(handle, rect);
-            }
-
-            return rect;
+            return DesktopPlatform.Current.GetWindowRectangle(handle);
         }
 
         public static Rectangle GetActiveWindowRectangle()
         {
-            IntPtr handle = NativeMethods.GetForegroundWindow();
-            return GetWindowRectangle(handle);
+            IDesktopPlatform platform = DesktopPlatform.Current;
+            return platform.GetWindowRectangle(platform.GetForegroundWindow());
         }
 
         public static Rectangle GetActiveWindowClientRectangle()
         {
-            IntPtr handle = NativeMethods.GetForegroundWindow();
-            return NativeMethods.GetClientRect(handle);
+            IDesktopPlatform platform = DesktopPlatform.Current;
+            return platform.GetWindowClientRectangle(platform.GetForegroundWindow());
         }
 
         public static bool IsActiveWindowFullscreen()
         {
+            if (!OperatingSystem.IsWindows())
+            {
+                return false;
+            }
+
             IntPtr handle = NativeMethods.GetForegroundWindow();
 
             if (handle.ToInt32() > 0)

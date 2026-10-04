@@ -230,11 +230,11 @@ internal sealed class CaptureHubView : UserControl
 
         try
         {
-            foreach (WindowInfo window in new WindowsList().GetVisibleWindowsList())
+            foreach (DesktopWindow window in DesktopPlatform.Current.GetVisibleWindows())
             {
-                WindowInfo target = window;
-                MenuItem item = new() { Header = new TextBlock { Text = target.Text.Truncate(60, "...") } };
-                item.Click += (_, _) => HubUi.Run(() => new CaptureWindow(target.Handle).Capture(true));
+                DesktopWindow target = window;
+                MenuItem item = new() { Header = new TextBlock { Text = target.Title.Truncate(60, "...") } };
+                item.Click += (_, _) => HubUi.Run(() => new CaptureWindow(target.Id).Capture(true));
                 menu.Items.Add(item);
             }
         }

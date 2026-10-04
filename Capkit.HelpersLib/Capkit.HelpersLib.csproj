@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net10.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(CapkitPlatform)' == 'windows'">net10.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(CapkitPlatform)' != 'windows'">net10.0</TargetFramework>
     <OutputType>Library</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -11,7 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Existing Windows printing and shell icon interop still require System.Drawing.Common. -->
-    <FrameworkReference Include="Microsoft.WindowsDesktop.App" />
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App" Condition="'$(CapkitPlatform)' == 'windows'" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(CapkitPlatform)' != 'windows'">
+    <PackageReference Include="System.Drawing.Common" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" />
+    <PackageReference Include="Microsoft.Win32.SystemEvents" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Capkit.Avalonia\Capkit.Avalonia.csproj" />

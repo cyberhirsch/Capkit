@@ -33,7 +33,9 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+#if WINDOWS
 using System.Media;
+#endif
 using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Resources;
@@ -384,9 +386,8 @@ namespace Capkit.HelpersLib
                 Task.Run(() =>
                 {
                     using (stream)
-                    using (SoundPlayer soundPlayer = new SoundPlayer(stream))
                     {
-                        soundPlayer.Play();
+                        PlayWave(stream, false);
                     }
                 });
             }
@@ -399,9 +400,8 @@ namespace Capkit.HelpersLib
                 Task.Run(() =>
                 {
                     using (stream)
-                    using (SoundPlayer soundPlayer = new SoundPlayer(stream))
                     {
-                        soundPlayer.PlaySync();
+                        PlayWave(stream, true);
                     }
                 });
             }
@@ -413,12 +413,47 @@ namespace Capkit.HelpersLib
             {
                 Task.Run(() =>
                 {
-                    using (SoundPlayer soundPlayer = new SoundPlayer(filePath))
+                    using (FileStream stream = File.OpenRead(filePath))
                     {
-                        soundPlayer.PlaySync();
+                        PlayWave(stream, true);
                     }
                 });
             }
+        }
+
+        private static void PlayWave(Stream stream, bool wait)
+        {
+#if WINDOWS
+            using (SoundPlayer soundPlayer = new SoundPlayer(stream))
+            {
+                if (wait) soundPlayer.PlaySync();
+                else soundPlayer.Play();
+            }
+#else
+            // macOS: afplay ships with the OS and plays WAV files.
+            string tempPath = Path.Combine(Path.GetTempPath(), $"capkit-sound-{Guid.NewGuid():N}.wav");
+
+            try
+            {
+                using (FileStream file = File.Create(tempPath))
+                {
+                    stream.CopyTo(file);
+                }
+
+                using (Process process = Process.Start(new ProcessStartInfo("afplay", $"\"{tempPath}\"") { UseShellExecute = false, CreateNoWindow = true }))
+                {
+                    process?.WaitForExit();
+                }
+            }
+            catch (Exception e)
+            {
+                DebugHelper.WriteException(e, "Sound playback failed.");
+            }
+            finally
+            {
+                try { File.Delete(tempPath); } catch { }
+            }
+#endif
         }
 
         public static bool WaitWhile(Func<bool> check, int interval, int timeout = -1)
