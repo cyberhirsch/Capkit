@@ -1,0 +1,34 @@
+name: Build Capkit for macOS
+
+on:
+  push:
+    branches:
+      - "**"
+    paths-ignore:
+      - "**/*.md"
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build (macOS arm64)
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Build
+        run: dotnet build Capkit/Capkit.csproj -c Debug -p:CapkitPlatform=macos -r osx-arm64
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: Capkit-macos-arm64
+          path: Capkit/bin/Debug/osx-arm64
+          if-no-files-found: error
