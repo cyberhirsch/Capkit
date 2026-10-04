@@ -38,3 +38,44 @@ jobs:
           name: Capkit-macos-arm64
           path: Capkit/bin/Debug/osx-arm64
           if-no-files-found: error
+
+      - name: Launch test
+        run: |
+          # Run a copy in portable mode so the test config and logs stay inside the job folder.
+          rm -rf "$RUNNER_TEMP/launch" && cp -R Capkit/bin/Debug/osx-arm64 "$RUNNER_TEMP/launch"
+          cd "$RUNNER_TEMP/launch"
+          touch Portable
+          mkdir -p Capkit
+          echo '{ "ShowStartScreen": false }' > Capkit/ApplicationConfig.json
+
+          ./Capkit > launch-output.txt 2>&1 &
+          pid=$!
+          sleep 25
+          screencapture -x launch-screen.png || echo "screencapture failed"
+
+          if kill -0 "$pid" 2>/dev/null; then
+            alive=1
+            echo "Capkit is still running after 25 s."
+            kill "$pid"
+          else
+            alive=0
+            wait "$pid"; echo "Capkit exited early with code $?."
+          fi
+
+          echo "::group::Console output"; cat launch-output.txt; echo "::endgroup::"
+          log=$(find Capkit/Logs -type f -name '*.txt' 2>/dev/null | head -1)
+          echo "::group::Capkit log"; [ -n "$log" ] && cat "$log" || echo "No log file written."; echo "::endgroup::"
+
+          test "$alive" = 1
+          test -n "$log" && grep -q "Startup time" "$log"
+
+      - name: Upload launch results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Capkit-macos-launch
+          path: |
+            ${{ runner.temp }}/launch/launch-output.txt
+            ${{ runner.temp }}/launch/launch-screen.png
+            ${{ runner.temp }}/launch/Capkit/Logs
+          if-no-files-found: warn
