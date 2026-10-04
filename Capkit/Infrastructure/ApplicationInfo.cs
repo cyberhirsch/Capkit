@@ -35,7 +35,10 @@ internal static class ApplicationInfo
 {
     internal const string Name = "Capkit";
     internal const string MutexName = "F597DA05-4959-43D3-90EB-98970E2A1E10";
-    internal static readonly string PipeName = $"{Environment.MachineName}-{Environment.UserName}-{Name}";
+    // Off Windows the pipe is a Unix socket under $TMPDIR, whose full path must stay below ~104 characters.
+    internal static readonly string PipeName = OperatingSystem.IsWindows()
+        ? $"{Environment.MachineName}-{Environment.UserName}-{Name}"
+        : $"capkit-{Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(Environment.UserName)))[..12].ToLowerInvariant()}";
 
     internal const CapkitBuild Build =
 #if RELEASE
