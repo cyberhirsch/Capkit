@@ -30,7 +30,8 @@ internal static class FileTypeRegistration
     internal static void RegisterMissingExtensions()
     {
 #if !MicrosoftStore
-        if (StartupOptions.Portable)
+        // Registry-based file associations are Windows-only; a Mac bundle declares its types in Info.plist.
+        if (StartupOptions.Portable || !OperatingSystem.IsWindows())
         {
             return;
         }
