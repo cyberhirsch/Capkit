@@ -5541,5 +5541,997 @@ namespace Capkit.Localization {
 
         public static string MainMenuBuilder_AnimatedGifTrimmer => ResourceManager.GetString("MainMenuBuilder_AnimatedGifTrimmer", resourceCulture);
         public static string MainWindow_TrimAnimatedGif => ResourceManager.GetString("MainWindow_TrimAnimatedGif", resourceCulture);
+    
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accounts....
+        /// </summary>
+        public static string Hub_Accounts {
+            get {
+                return ResourceManager.GetString("Hub_Accounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active window.
+        /// </summary>
+        public static string Hub_ActiveWindow {
+            get {
+                return ResourceManager.GetString("Hub_ActiveWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to After upload.
+        /// </summary>
+        public static string Hub_AfterUpload {
+            get {
+                return ResourceManager.GetString("Hub_AfterUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What the Default pipeline does with the link once an upload finishes..
+        /// </summary>
+        public static string Hub_AfterUploadHint {
+            get {
+                return ResourceManager.GetString("Hub_AfterUploadHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All recording settings.
+        /// </summary>
+        public static string Hub_AllRecordingSettings {
+            get {
+                return ResourceManager.GetString("Hub_AllRecordingSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All steps.
+        /// </summary>
+        public static string Hub_AllSteps {
+            get {
+                return ResourceManager.GetString("Hub_AllSteps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any capture button.
+        /// </summary>
+        public static string Hub_AnyButton {
+            get {
+                return ResourceManager.GetString("Hub_AnyButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Capture now.
+        /// </summary>
+        public static string Hub_CaptureNow {
+            get {
+                return ResourceManager.GetString("Hub_CaptureNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Captures with the Default pipeline below..
+        /// </summary>
+        public static string Hub_CaptureNowHint {
+            get {
+                return ResourceManager.GetString("Hub_CaptureNowHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Hub_Change {
+            get {
+                return ResourceManager.GetString("Hub_Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changed for this shortcut.
+        /// </summary>
+        public static string Hub_ChangedForShortcut {
+            get {
+                return ResourceManager.GetString("Hub_ChangedForShortcut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom region.
+        /// </summary>
+        public static string Hub_CustomRegion {
+            get {
+                return ResourceManager.GetString("Hub_CustomRegion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom uploaders....
+        /// </summary>
+        public static string Hub_CustomUploaders {
+            get {
+                return ResourceManager.GetString("Hub_CustomUploaders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        public static string Hub_Default {
+            get {
+                return ResourceManager.GetString("Hub_Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used by every button above.
+        /// </summary>
+        public static string Hub_DefaultHint {
+            get {
+                return ResourceManager.GetString("Hub_DefaultHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delay.
+        /// </summary>
+        public static string Hub_Delay {
+            get {
+                return ResourceManager.GetString("Hub_Delay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destinations.
+        /// </summary>
+        public static string Hub_Destinations {
+            get {
+                return ResourceManager.GetString("Hub_Destinations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Where the Default pipeline uploads each kind of content..
+        /// </summary>
+        public static string Hub_DestinationsHint {
+            get {
+                return ResourceManager.GetString("Hub_DestinationsHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editing: {0}.
+        /// </summary>
+        public static string Hub_Editing {
+            get {
+                return ResourceManager.GetString("Hub_Editing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ask before uploading.
+        /// </summary>
+        public static string Hub_FieldAskBeforeUpload {
+            get {
+                return ResourceManager.GetString("Hub_FieldAskBeforeUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crosshair lines.
+        /// </summary>
+        public static string Hub_FieldCrosshair {
+            get {
+                return ResourceManager.GetString("Hub_FieldCrosshair", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination.
+        /// </summary>
+        public static string Hub_FieldDestination {
+            get {
+                return ResourceManager.GetString("Hub_FieldDestination", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Effect preset.
+        /// </summary>
+        public static string Hub_FieldEffectPreset {
+            get {
+                return ResourceManager.GetString("Hub_FieldEffectPreset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File name pattern.
+        /// </summary>
+        public static string Hub_FieldFileName {
+            get {
+                return ResourceManager.GetString("Hub_FieldFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folder.
+        /// </summary>
+        public static string Hub_FieldFolder {
+            get {
+                return ResourceManager.GetString("Hub_FieldFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image format.
+        /// </summary>
+        public static string Hub_FieldFormat {
+            get {
+                return ResourceManager.GetString("Hub_FieldFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frame rate (FPS).
+        /// </summary>
+        public static string Hub_FieldFrameRate {
+            get {
+                return ResourceManager.GetString("Hub_FieldFrameRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If the file exists.
+        /// </summary>
+        public static string Hub_FieldIfFileExists {
+            get {
+                return ResourceManager.GetString("Hub_FieldIfFileExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JPEG quality.
+        /// </summary>
+        public static string Hub_FieldJpegQuality {
+            get {
+                return ResourceManager.GetString("Hub_FieldJpegQuality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quality (CRF, lower is better).
+        /// </summary>
+        public static string Hub_FieldQualityCrf {
+            get {
+                return ResourceManager.GetString("Hub_FieldQualityCrf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shorten the link first.
+        /// </summary>
+        public static string Hub_FieldShortenUrl {
+            get {
+                return ResourceManager.GetString("Hub_FieldShortenUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL shortener.
+        /// </summary>
+        public static string Hub_FieldShortener {
+            get {
+                return ResourceManager.GetString("Hub_FieldShortener", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show cursor.
+        /// </summary>
+        public static string Hub_FieldShowCursor {
+            get {
+                return ResourceManager.GetString("Hub_FieldShowCursor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show size and position.
+        /// </summary>
+        public static string Hub_FieldShowInfo {
+            get {
+                return ResourceManager.GetString("Hub_FieldShowInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show magnifier.
+        /// </summary>
+        public static string Hub_FieldShowMagnifier {
+            get {
+                return ResourceManager.GetString("Hub_FieldShowMagnifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snap to windows.
+        /// </summary>
+        public static string Hub_FieldSnapToWindows {
+            get {
+                return ResourceManager.GetString("Hub_FieldSnapToWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start delay (seconds).
+        /// </summary>
+        public static string Hub_FieldStartDelay {
+            get {
+                return ResourceManager.GetString("Hub_FieldStartDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video codec.
+        /// </summary>
+        public static string Hub_FieldVideoCodec {
+            get {
+                return ResourceManager.GetString("Hub_FieldVideoCodec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File uploader.
+        /// </summary>
+        public static string Hub_FileUploader {
+            get {
+                return ResourceManager.GetString("Hub_FileUploader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The default screenshots folder is set in Application settings &gt; Paths..
+        /// </summary>
+        public static string Hub_FolderInSettingsHint {
+            get {
+                return ResourceManager.GetString("Hub_FolderInSettingsHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format.
+        /// </summary>
+        public static string Hub_Format {
+            get {
+                return ResourceManager.GetString("Hub_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GIF.
+        /// </summary>
+        public static string Hub_Gif {
+            get {
+                return ResourceManager.GetString("Hub_Gif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to.
+        /// </summary>
+        public static string Hub_GoTo {
+            get {
+                return ResourceManager.GetString("Hub_GoTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide region options.
+        /// </summary>
+        public static string Hub_HideRegionOptions {
+            get {
+                return ResourceManager.GetString("Hub_HideRegionOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History window.
+        /// </summary>
+        public static string Hub_HistoryWindow {
+            get {
+                return ResourceManager.GetString("Hub_HistoryWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image file uploader.
+        /// </summary>
+        public static string Hub_ImageFileUploader {
+            get {
+                return ResourceManager.GetString("Hub_ImageFileUploader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image uploader.
+        /// </summary>
+        public static string Hub_ImageUploader {
+            get {
+                return ResourceManager.GetString("Hub_ImageUploader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More.
+        /// </summary>
+        public static string Hub_More {
+            get {
+                return ResourceManager.GetString("Hub_More", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} changes.
+        /// </summary>
+        public static string Hub_NChanges {
+            get {
+                return ResourceManager.GetString("Hub_NChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New shortcut.
+        /// </summary>
+        public static string Hub_NewShortcut {
+            get {
+                return ResourceManager.GetString("Hub_NewShortcut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No hotkey.
+        /// </summary>
+        public static string Hub_NoHotkey {
+            get {
+                return ResourceManager.GetString("Hub_NoHotkey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No results.
+        /// </summary>
+        public static string Hub_NoResults {
+            get {
+                return ResourceManager.GetString("Hub_NoResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No upload shortcuts yet..
+        /// </summary>
+        public static string Hub_NoUploadShortcuts {
+            get {
+                return ResourceManager.GetString("Hub_NoUploadShortcuts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string Hub_None {
+            get {
+                return ResourceManager.GetString("Hub_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string Hub_Off {
+            get {
+                return ResourceManager.GetString("Hub_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off, this step is skipped.
+        /// </summary>
+        public static string Hub_OffSkipped {
+            get {
+                return ResourceManager.GetString("Hub_OffSkipped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        public static string Hub_On {
+            get {
+                return ResourceManager.GetString("Hub_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 change.
+        /// </summary>
+        public static string Hub_OneChange {
+            get {
+                return ResourceManager.GetString("Hub_OneChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open screenshots folder.
+        /// </summary>
+        public static string Hub_OpenScreenshotsFolder {
+            get {
+                return ResourceManager.GetString("Hub_OpenScreenshotsFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search actions, tools, shortcuts and settings.
+        /// </summary>
+        public static string Hub_PaletteWatermark {
+            get {
+                return ResourceManager.GetString("Hub_PaletteWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Steps run from left to right after every capture. Select a step to see its settings..
+        /// </summary>
+        public static string Hub_PipelineHint {
+            get {
+                return ResourceManager.GetString("Hub_PipelineHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recordings share the after-capture steps with screenshots. Steps that only apply to images are left out here..
+        /// </summary>
+        public static string Hub_PipelineSharedHint {
+            get {
+                return ResourceManager.GetString("Hub_PipelineSharedHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record now.
+        /// </summary>
+        public static string Hub_RecordNow {
+            get {
+                return ResourceManager.GetString("Hub_RecordNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starts recording with the Default pipeline below. Click again to stop..
+        /// </summary>
+        public static string Hub_RecordNowHint {
+            get {
+                return ResourceManager.GetString("Hub_RecordNowHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recording.
+        /// </summary>
+        public static string Hub_Recording {
+            get {
+                return ResourceManager.GetString("Hub_Recording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Region options.
+        /// </summary>
+        public static string Hub_RegionOptions {
+            get {
+                return ResourceManager.GetString("Hub_RegionOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Hub_Reset {
+            get {
+                return ResourceManager.GetString("Hub_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset section.
+        /// </summary>
+        public static string Hub_ResetSection {
+            get {
+                return ResourceManager.GetString("Hub_ResetSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This shortcut overrides the whole section. Resetting returns every setting in it to the default..
+        /// </summary>
+        public static string Hub_ResetSectionHint {
+            get {
+                return ResourceManager.GetString("Hub_ResetSectionHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run this shortcut.
+        /// </summary>
+        public static string Hub_RunShortcut {
+            get {
+                return ResourceManager.GetString("Hub_RunShortcut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default pipeline. Every capture button uses these values, and shortcuts follow them unless they change a setting..
+        /// </summary>
+        public static string Hub_ScopeDefault {
+            get {
+                return ResourceManager.GetString("Hub_ScopeDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: settings marked Default follow the Default pipeline. Change one to make it specific to this shortcut..
+        /// </summary>
+        public static string Hub_ScopeShortcut {
+            get {
+                return ResourceManager.GetString("Hub_ScopeShortcut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Screenshot.
+        /// </summary>
+        public static string Hub_Screenshot {
+            get {
+                return ResourceManager.GetString("Hub_Screenshot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Hub_Search {
+            get {
+                return ResourceManager.GetString("Hub_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search tools.
+        /// </summary>
+        public static string Hub_SearchTools {
+            get {
+                return ResourceManager.GetString("Hub_SearchTools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} s.
+        /// </summary>
+        public static string Hub_SecondsShort {
+            get {
+                return ResourceManager.GetString("Hub_SecondsShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share.
+        /// </summary>
+        public static string Hub_Share {
+            get {
+                return ResourceManager.GetString("Hub_Share", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shortcuts.
+        /// </summary>
+        public static string Hub_Shortcuts {
+            get {
+                return ResourceManager.GetString("Hub_Shortcuts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hotkeys with their own pipeline. Select one to edit it below..
+        /// </summary>
+        public static string Hub_ShortcutsHint {
+            get {
+                return ResourceManager.GetString("Hub_ShortcutsHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skipped.
+        /// </summary>
+        public static string Hub_Skipped {
+            get {
+                return ResourceManager.GetString("Hub_Skipped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Annotate.
+        /// </summary>
+        public static string Hub_StepAnnotate {
+            get {
+                return ResourceManager.GetString("Hub_StepAnnotate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the capture in the image editor before the next steps run..
+        /// </summary>
+        public static string Hub_StepAnnotateDescription {
+            get {
+                return ResourceManager.GetString("Hub_StepAnnotateDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy file.
+        /// </summary>
+        public static string Hub_StepCopyFile {
+            get {
+                return ResourceManager.GetString("Hub_StepCopyFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copies the recorded file to the clipboard..
+        /// </summary>
+        public static string Hub_StepCopyFileDescription {
+            get {
+                return ResourceManager.GetString("Hub_StepCopyFileDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy image.
+        /// </summary>
+        public static string Hub_StepCopyImage {
+            get {
+                return ResourceManager.GetString("Hub_StepCopyImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copies the image to the clipboard..
+        /// </summary>
+        public static string Hub_StepCopyImageDescription {
+            get {
+                return ResourceManager.GetString("Hub_StepCopyImageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy link.
+        /// </summary>
+        public static string Hub_StepCopyLink {
+            get {
+                return ResourceManager.GetString("Hub_StepCopyLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copies the link of the finished upload to the clipboard..
+        /// </summary>
+        public static string Hub_StepCopyLinkDescription {
+            get {
+                return ResourceManager.GetString("Hub_StepCopyLinkDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Effects.
+        /// </summary>
+        public static string Hub_StepEffects {
+            get {
+                return ResourceManager.GetString("Hub_StepEffects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Applies an image effect preset, such as a shadow or border..
+        /// </summary>
+        public static string Hub_StepEffectsDescription {
+            get {
+                return ResourceManager.GetString("Hub_StepEffectsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save file.
+        /// </summary>
+        public static string Hub_StepSave {
+            get {
+                return ResourceManager.GetString("Hub_StepSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saves the image to the screenshots folder..
+        /// </summary>
+        public static string Hub_StepSaveDescription {
+            get {
+                return ResourceManager.GetString("Hub_StepSaveDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save file.
+        /// </summary>
+        public static string Hub_StepSaveRecording {
+            get {
+                return ResourceManager.GetString("Hub_StepSaveRecording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recordings are always saved to the screenshots folder..
+        /// </summary>
+        public static string Hub_StepSaveRecordingDescription {
+            get {
+                return ResourceManager.GetString("Hub_StepSaveRecordingDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show in folder.
+        /// </summary>
+        public static string Hub_StepShowInFolder {
+            get {
+                return ResourceManager.GetString("Hub_StepShowInFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the folder that contains the file..
+        /// </summary>
+        public static string Hub_StepShowInFolderDescription {
+            get {
+                return ResourceManager.GetString("Hub_StepShowInFolderDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string Hub_StepUpload {
+            get {
+                return ResourceManager.GetString("Hub_StepUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploads the file to the selected destination..
+        /// </summary>
+        public static string Hub_StepUploadDescription {
+            get {
+                return ResourceManager.GetString("Hub_StepUploadDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text file uploader.
+        /// </summary>
+        public static string Hub_TextFileUploader {
+            get {
+                return ResourceManager.GetString("Hub_TextFileUploader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text uploader.
+        /// </summary>
+        public static string Hub_TextUploader {
+            get {
+                return ResourceManager.GetString("Hub_TextUploader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This shortcut.
+        /// </summary>
+        public static string Hub_ThisShortcut {
+            get {
+                return ResourceManager.GetString("Hub_ThisShortcut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload now.
+        /// </summary>
+        public static string Hub_UploadNow {
+            get {
+                return ResourceManager.GetString("Hub_UploadNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploads with the Default destinations and after-upload steps..
+        /// </summary>
+        public static string Hub_UploadNowHint {
+            get {
+                return ResourceManager.GetString("Hub_UploadNowHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hotkeys that upload. Click one to run it..
+        /// </summary>
+        public static string Hub_UploadShortcutsHint {
+            get {
+                return ResourceManager.GetString("Hub_UploadShortcutsHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL sharing service.
+        /// </summary>
+        public static string Hub_UrlSharing {
+            get {
+                return ResourceManager.GetString("Hub_UrlSharing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL shortener.
+        /// </summary>
+        public static string Hub_UrlShortener {
+            get {
+                return ResourceManager.GetString("Hub_UrlShortener", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video (MP4).
+        /// </summary>
+        public static string Hub_VideoMp4 {
+            get {
+                return ResourceManager.GetString("Hub_VideoMp4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What happens next.
+        /// </summary>
+        public static string Hub_WhatHappensNext {
+            get {
+                return ResourceManager.GetString("Hub_WhatHappensNext", resourceCulture);
+            }
+        }
+    
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting.
+        /// </summary>
+        public static string Hub_Setting {
+            get {
+                return ResourceManager.GetString("Hub_Setting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pipeline step.
+        /// </summary>
+        public static string Hub_Step {
+            get {
+                return ResourceManager.GetString("Hub_Step", resourceCulture);
+            }
+        }
     }
 }

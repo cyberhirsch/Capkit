@@ -139,6 +139,9 @@ namespace Capkit
         public bool UseDefaultAdvancedSettings = true;
         public TaskSettingsAdvanced AdvancedSettings = new TaskSettingsAdvanced();
 
+        /// <summary>Single settings this workflow changes while following the defaults otherwise. See <see cref="WorkflowOverrides"/>.</summary>
+        public Dictionary<string, string> FieldOverrides = new Dictionary<string, string>();
+
         public bool WatchFolderEnabled = false;
         public List<WatchFolderSettings> WatchFolderList = new List<WatchFolderSettings>();
 
@@ -153,7 +156,8 @@ namespace Capkit
             {
                 return UseDefaultAfterCaptureJob && UseDefaultAfterUploadJob && UseDefaultDestinations && !OverrideFTP && !OverrideCustomUploader &&
                     !OverrideScreenshotsFolder && UseDefaultGeneralSettings && UseDefaultImageSettings && UseDefaultCaptureSettings && UseDefaultUploadSettings &&
-                    UseDefaultActions && UseDefaultToolsSettings && UseDefaultAdvancedSettings && !WatchFolderEnabled;
+                    UseDefaultActions && UseDefaultToolsSettings && UseDefaultAdvancedSettings && !WatchFolderEnabled &&
+                    (FieldOverrides == null || FieldOverrides.Count == 0);
             }
         }
 
@@ -246,6 +250,8 @@ namespace Capkit
                 {
                     AdvancedSettings = defaultTaskSettings.AdvancedSettings;
                 }
+
+                WorkflowOverrides.Apply(this);
             }
         }
 

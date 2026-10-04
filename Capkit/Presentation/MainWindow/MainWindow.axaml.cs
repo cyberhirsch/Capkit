@@ -112,7 +112,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         _trayIconService.RightButtonUp += OnTrayIconRightButtonUp;
 
         BuildNavigation();
-        ConfigureWindowHeightFromNavigation();
+        ShowHub(MainHub.Capture);
         RestoreWindowBounds();
         RefreshHotkeyTips();
 
@@ -132,6 +132,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         PositionChanged += (_, _) => SaveWindowBounds();
         Resized += (_, _) => SaveWindowBounds();
         KeyDown += OnWindowKeyDown;
+        // Hotkeys and settings are often edited in other windows; pick their changes up on return.
+        Activated += (_, _) => RefreshHubsIfChanged();
 
         Dispatcher.UIThread.Post(WarmUpTrayMenu, DispatcherPriority.Background);
     }
@@ -310,6 +312,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         RequestedThemeVariant = ThemeManager.GetCurrentTheme();
         BuildNavigation();
+        RefreshHubs();
         RefreshHotkeyTips();
 
         foreach (ThumbnailItemViewModel item in ThumbnailItems)
@@ -329,56 +332,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         _allowClose = true;
         Close();
-    }
-
-    private void BuildNavigation()
-    {
-        NavigationPanel.Children.Clear();
-        int index = 0;
-
-        foreach (MainNavigationSection section in _navigationMenuBuilder.BuildNavigation().Where(x => x.IsVisible))
-        {
-            if (index is 4 or 7 or 12 or 15)
-            {
-                NavigationPanel.Children.Add(new Separator { Margin = new Thickness(5, 2) });
-            }
-
-            MainNavigationSection current = section;
-            Button button = new()
-            {
-                Classes = { "nav-button" },
-                Content = CreateNavigationContent(current),
-                Tag = current
-            };
-            button.Click += OnNavigationClick;
-            NavigationPanel.Children.Add(button);
-            index++;
-        }
-    }
-
-    private void ConfigureWindowHeightFromNavigation()
-    {
-        Avalonia.Size availableSize = new(double.PositiveInfinity, double.PositiveInfinity);
-        NavigationPanel.Measure(availableSize);
-        TitleBar.Measure(availableSize);
-
-        double navigationHeight = Math.Ceiling(NavigationPanel.DesiredSize.Height);
-        double titleBarHeight = Math.Ceiling(TitleBar.DesiredSize.Height);
-        double frameHeight = WindowFrame.BorderThickness.Top + WindowFrame.BorderThickness.Bottom;
-        double windowHeight = navigationHeight + titleBarHeight + frameHeight;
-
-        if (windowHeight <= 0 || double.IsNaN(windowHeight) || double.IsInfinity(windowHeight))
-        {
-            return;
-        }
-
-        MinHeight = windowHeight;
-
-        DrawingSize savedSize = ApplicationState.Settings.MainFormSize;
-        if (!ApplicationState.Settings.RememberMainFormSize || savedSize.IsEmpty)
-        {
-            Height = windowHeight;
-        }
     }
 
     private static Control CreateNavigationContent(MainNavigationSection section)
@@ -1778,6 +1731,19 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void OnWindowKeyDown(object? sender, KeyEventArgs e)
     {
+        if (e.Key == Key.K && e.KeyModifiers == KeyModifiers.Control)
+        {
+            OpenCommandPalette();
+            e.Handled = true;
+            return;
+        }
+
+        // The shortcuts below act on the selected history items; leave text boxes and the other hubs alone.
+        if (_hub != MainHub.History || PaletteHost.IsVisible || FocusManager?.GetFocusedElement() is TextBox)
+        {
+            return;
+        }
+
         _uploadInfoManager.UpdateSelectedItems(GetSelectedItems().Select(x => x.Task));
         bool control = e.KeyModifiers.HasFlag(KeyModifiers.Control);
         bool shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);

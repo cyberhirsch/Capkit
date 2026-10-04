@@ -7,9 +7,10 @@
         x:Class="Capkit.MainWindow"
         x:CompileBindings="False"
         Title="Capkit"
-        Width="900"
-        Height="720"
-        MinWidth="760"
+        Width="1180"
+        Height="840"
+        MinWidth="1000"
+        MinHeight="640"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaTitleBarHeightHint="38"
         WindowDecorations="BorderOnly"
@@ -126,6 +127,238 @@
         <Style Selector="Button.caption-close:pressed /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Background" Value="#A51D12"/>
         </Style>
+        <Style Selector="Button.nav-button.active /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background.Hover}"/>
+        </Style>
+        <Style Selector="Button.nav-button.active TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style Selector="Border.hub-card">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Background.Panel}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Border}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="16"/>
+        </Style>
+        <Style Selector="Border.hub-inset">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Separator}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="12,8"/>
+        </Style>
+        <Style Selector="Border.hub-detail">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Separator}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="16,12"/>
+        </Style>
+        <Style Selector="TextBlock.hub-title">
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style Selector="TextBlock.hub-section">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style Selector="TextBlock.hub-strong">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style Selector="TextBlock.hub-hint">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Opacity" Value="0.72"/>
+        </Style>
+        <Style Selector="TextBlock.hub-label">
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Opacity" Value="0.85"/>
+        </Style>
+        <Style Selector="TextBlock.hub-accent">
+            <Setter Property="Foreground" Value="{DynamicResource Capkit.Brush.Accent.Start}"/>
+        </Style>
+        <Style Selector="TextBlock.hub-accent-text">
+            <Setter Property="Foreground" Value="{DynamicResource Capkit.Brush.Accent.Start}"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style Selector="TextBlock.hub-arrow">
+            <Setter Property="Opacity" Value="0.45"/>
+        </Style>
+        <Style Selector="Button.hub-tile">
+            <Setter Property="Height" Value="NaN"/>
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Separator}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="MinHeight" Value="92"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+        </Style>
+        <Style Selector="Button.hub-row">
+            <Setter Property="Height" Value="NaN"/>
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Separator}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+        <Style Selector="Button.hub-tile:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background.Hover}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Accent.Start}"/>
+        </Style>
+        <Style Selector="Button.hub-row:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background.Hover}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Accent.Start}"/>
+        </Style>
+        <Style Selector="Button.hub-tile.selected">
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Accent.Start}"/>
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background.Hover}"/>
+        </Style>
+        <Style Selector="Button.hub-row.selected">
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Accent.Start}"/>
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background.Hover}"/>
+        </Style>
+        <Style Selector="Border.hub-step">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="MinHeight" Value="96"/>
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Separator}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+        </Style>
+        <Style Selector="Border.hub-step.trigger">
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Accent.Start}"/>
+        </Style>
+        <Style Selector="Border.hub-step.selected">
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Accent.Start}"/>
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background.Hover}"/>
+        </Style>
+        <Style Selector="Border.hub-step.off Button.hub-step-button">
+            <Setter Property="Opacity" Value="0.5"/>
+        </Style>
+        <Style Selector="Button.hub-step-button">
+            <Setter Property="Height" Value="NaN"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+        </Style>
+        <Style Selector="Button.hub-step-button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        <Style Selector="ToggleSwitch.hub-switch">
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+        <Style Selector="Border.hub-segmented">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Background.Toolbar}"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="3"/>
+        </Style>
+        <Style Selector="Button.hub-segment">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12,5"/>
+            <Setter Property="Opacity" Value="0.8"/>
+        </Style>
+        <Style Selector="Button.hub-segment.active">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background.Hover}"/>
+            <Setter Property="Opacity" Value="1"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style Selector="Button.hub-button.dashed">
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Separator}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Button.hub-link">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="{DynamicResource Capkit.Brush.Accent.Start}"/>
+            <Setter Property="Padding" Value="6,4"/>
+        </Style>
+        <Style Selector="Button.hub-icon-button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Border.hub-badge">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background.Hover}"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="8,2"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Border.hub-badge TextBlock">
+            <Setter Property="FontSize" Value="11"/>
+        </Style>
+        <Style Selector="Border.hub-badge.accent">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Accent.Start}"/>
+        </Style>
+        <Style Selector="Border.hub-badge.on">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Status.Success}"/>
+        </Style>
+        <Style Selector="Border.hub-badge.off">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Status.Error}"/>
+        </Style>
+        <Style Selector="Border.hub-badge.accent TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="Border.hub-badge.on TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="Border.hub-badge.off TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="Border.hub-keycap">
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Separator}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Padding" Value="5,1"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Border.hub-keycap TextBlock">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontFamily" Value="{DynamicResource Capkit.FontFamily.Monospace}"/>
+        </Style>
+        <Style Selector="Border.hub-dot">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Accent.Start}"/>
+        </Style>
+        <Style Selector="TextBox.mono">
+            <Setter Property="FontFamily" Value="{DynamicResource Capkit.FontFamily.Monospace}"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style Selector="Border.palette-backdrop">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Overlay.Soft}"/>
+        </Style>
+        <Style Selector="Border.palette">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Background.Popup}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Capkit.Brush.Accent.Start}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="BoxShadow" Value="0 12 40 0 #66000000"/>
+        </Style>
+        <Style Selector="TextBox.palette-input">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="10,8"/>
+        </Style>
+        <Style Selector="Button.palette-item">
+            <Setter Property="Height" Value="NaN"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="10,7"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+        <Style Selector="Button.palette-item.selected /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Capkit.Brush.Control.Background.Hover}"/>
+        </Style>
     </Window.Styles>
 
     <Border x:Name="WindowFrame"
@@ -240,7 +473,11 @@
             </ScrollViewer>
         </Border>
 
-        <Grid Grid.Column="1"
+        <ContentControl x:Name="HubHost" Grid.Column="1"/>
+
+        <Grid x:Name="HistoryView"
+              Grid.Column="1"
+              IsVisible="False"
               PointerPressed="OnMainContentPointerPressed"
               PointerReleased="OnMainContentPointerReleased">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -512,6 +749,8 @@
                 </StackPanel>
             </Border>
         </Border>
+
+        <ContentControl x:Name="PaletteHost" Grid.ColumnSpan="2" IsVisible="False"/>
             </Grid>
         </Grid>
     </Border>

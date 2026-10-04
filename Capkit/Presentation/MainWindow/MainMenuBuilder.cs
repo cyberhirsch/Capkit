@@ -50,34 +50,84 @@ internal sealed class MainMenuBuilder
         _trayMenu = trayMenu;
     }
 
-    public IReadOnlyList<MainNavigationSection> BuildNavigation()
+    /// <summary>Navigation below the hubs: workflows, the rarely used pages, and application settings.</summary>
+    public IReadOnlyList<MainNavigationSection> BuildSecondaryNavigation()
+    {
+        return new List<MainNavigationSection>
+        {
+            new(Strings.MainMenuBuilder_Workflows, LucideIcons.list_checks, BuildWorkflowsMenu),
+            new(Strings.Hub_More, LucideIcons.ellipsis, BuildMoreMenu),
+            new(Strings.MainMenuBuilder_ApplicationSettings, LucideIcons.settings, () => Run(MainFormCommand.ApplicationSettings))
+        };
+    }
+
+    private IReadOnlyList<MainMenuEntry> BuildMoreMenu()
+    {
+        List<MainMenuEntry> items = new(BuildSettingsEntries())
+        {
+            MainMenuEntry.Separator(),
+            Parent(Strings.MainMenuBuilder_Debug, LucideIcons.bug, BuildDebugMenu),
+            MainMenuEntry.Separator(),
+            Item(Strings.MainMenuBuilder_Donate, LucideIcons.heart, () => Run(MainFormCommand.Donate)),
+            Item(Strings.MainMenuBuilder_FollowCapkit, LucideIcons.external_link, () => Run(MainFormCommand.X)),
+            Item(Strings.MainMenuBuilder_Discord, LucideIcons.message_circle, () => Run(MainFormCommand.Discord)),
+            Item(Strings.MainMenuBuilder_About, LucideIcons.info, () => Run(MainFormCommand.About))
+        };
+
+        return items;
+    }
+
+    private static IReadOnlyList<MainMenuEntry> BuildSettingsEntries()
     {
         bool uploadsEnabled = !SystemOptions.DisableUpload;
 
-        return new List<MainNavigationSection>
+        return new List<MainMenuEntry>
         {
-            new(Strings.MainMenuBuilder_Capture, LucideIcons.camera, BuildCaptureMenu),
-            new(Strings.MainMenuBuilder_Upload, LucideIcons.upload, BuildUploadMenu, uploadsEnabled),
-            new(Strings.MainMenuBuilder_Workflows, LucideIcons.list_checks, BuildWorkflowsMenu),
-            new(Strings.MainMenuBuilder_Tools, LucideIcons.wrench, BuildToolsMenu,
-                createCategories: BuildToolCategories),
-            new(Strings.MainMenuBuilder_AfterCaptureTasks, LucideIcons.image_up, BuildAfterCaptureMenu),
-            new(Strings.MainMenuBuilder_AfterUploadTasks, LucideIcons.cloud_upload, BuildAfterUploadMenu, uploadsEnabled),
-            new(Strings.MainMenuBuilder_Destinations, LucideIcons.server, BuildDestinationsMenu, uploadsEnabled),
-            new(Strings.MainMenuBuilder_ApplicationSettings, LucideIcons.settings, () => Run(MainFormCommand.ApplicationSettings)),
-            new(Strings.MainMenuBuilder_TaskSettings, LucideIcons.sliders_horizontal, () => Run(MainFormCommand.TaskSettings)),
-            new(Strings.MainMenuBuilder_HotkeySettings, LucideIcons.keyboard, () => Run(MainFormCommand.HotkeySettings)),
-            new(Strings.MainMenuBuilder_DestinationSettings, LucideIcons.cloud_cog, () => Run(MainFormCommand.DestinationSettings), uploadsEnabled),
-            new(Strings.MainMenuBuilder_CustomUploaderSettings, LucideIcons.cloud, () => Run(MainFormCommand.CustomUploaderSettings), uploadsEnabled),
-            new(Strings.MainMenuBuilder_ScreenshotsFolder, LucideIcons.folder_open, () => Run(MainFormCommand.ScreenshotsFolder)),
-            new(Strings.MainMenuBuilder_History, LucideIcons.history, () => Run(MainFormCommand.History)),
-            new(Strings.MainMenuBuilder_ImageHistory, LucideIcons.images, () => Run(MainFormCommand.ImageHistory)),
-            new(Strings.MainMenuBuilder_Debug, LucideIcons.bug, BuildDebugMenu),
-            new(Strings.MainMenuBuilder_Donate, LucideIcons.heart, () => Run(MainFormCommand.Donate)),
-            new(Strings.MainMenuBuilder_FollowCapkit, LucideIcons.external_link, () => Run(MainFormCommand.X)),
-            new(Strings.MainMenuBuilder_Discord, LucideIcons.message_circle, () => Run(MainFormCommand.Discord)),
-            new(Strings.MainMenuBuilder_About, LucideIcons.info, () => Run(MainFormCommand.About))
+            Item(Strings.MainMenuBuilder_ApplicationSettings, LucideIcons.settings, () => Run(MainFormCommand.ApplicationSettings)),
+            Item(Strings.MainMenuBuilder_TaskSettings, LucideIcons.sliders_horizontal, () => Run(MainFormCommand.TaskSettings)),
+            Item(Strings.MainMenuBuilder_HotkeySettings, LucideIcons.keyboard, () => Run(MainFormCommand.HotkeySettings)),
+            Item(Strings.MainMenuBuilder_DestinationSettings, LucideIcons.cloud_cog, () => Run(MainFormCommand.DestinationSettings), uploadsEnabled),
+            Item(Strings.MainMenuBuilder_CustomUploaderSettings, LucideIcons.cloud, () => Run(MainFormCommand.CustomUploaderSettings), uploadsEnabled),
+            Item(Strings.MainMenuBuilder_ScreenshotsFolder, LucideIcons.folder_open, () => Run(MainFormCommand.ScreenshotsFolder)),
+            Item(Strings.Hub_HistoryWindow, LucideIcons.history, () => Run(MainFormCommand.History)),
+            Item(Strings.MainMenuBuilder_ImageHistory, LucideIcons.images, () => Run(MainFormCommand.ImageHistory))
         };
+    }
+
+    /// <summary>Every runnable entry, flattened for the command palette.</summary>
+    internal IReadOnlyList<(string Category, MainMenuEntry Entry)> BuildSearchEntries()
+    {
+        List<(string, MainMenuEntry)> entries = new();
+
+        void Add(string category, IEnumerable<MainMenuEntry> items)
+        {
+            entries.AddRange(items
+                .Where(x => !x.IsSeparator && x.IsVisible && x.IsEnabled && x.ExecuteAsync != null && x.ToggleType == MainMenuToggleType.None)
+                .Select(x => (category, x)));
+        }
+
+        Add(Strings.MainMenuBuilder_Capture, BuildCaptureMenu());
+
+        if (!SystemOptions.DisableUpload)
+        {
+            Add(Strings.MainMenuBuilder_Upload, BuildUploadMenu());
+        }
+
+        foreach (MainMenuCategory category in BuildToolCategories())
+        {
+            Add(Strings.MainMenuBuilder_Tools, category.Entries);
+        }
+
+        Add(Strings.MainMenuBuilder_Workflows, BuildWorkflowsMenu());
+        Add(Strings.ApplicationSettingsWindow_Settings, BuildSettingsEntries());
+        Add(Strings.MainMenuBuilder_Debug, BuildDebugMenu());
+        Add(Strings.Hub_More, new[]
+        {
+            Item(Strings.MainMenuBuilder_About, LucideIcons.info, () => Run(MainFormCommand.About)),
+            Item(Strings.MainMenuBuilder_Donate, LucideIcons.heart, () => Run(MainFormCommand.Donate))
+        });
+
+        return entries;
     }
 
     public IReadOnlyList<MainMenuEntry> BuildTrayMenu()
@@ -215,7 +265,7 @@ internal sealed class MainMenuBuilder
             .ToArray();
     }
 
-    private static IReadOnlyList<MainMenuEntry> BuildUploadMenu()
+    internal static IReadOnlyList<MainMenuEntry> BuildUploadMenu()
     {
         return new List<MainMenuEntry>
         {
@@ -229,24 +279,7 @@ internal sealed class MainMenuBuilder
         };
     }
 
-    private static IReadOnlyList<MainMenuEntry> BuildToolsMenu()
-    {
-        List<MainMenuEntry> items = new();
-
-        foreach (MainMenuCategory category in BuildToolCategories())
-        {
-            if (items.Count > 0)
-            {
-                items.Add(MainMenuEntry.Separator());
-            }
-
-            items.AddRange(category.Entries);
-        }
-
-        return items;
-    }
-
-    private static IReadOnlyList<MainMenuCategory> BuildToolCategories() =>
+    internal static IReadOnlyList<MainMenuCategory> BuildToolCategories() =>
     [
         new(Strings.MainMenuBuilder_ToolCategoryScreen,
         [
@@ -582,7 +615,7 @@ internal sealed class MainMenuBuilder
         return LucideIcons.file;
     }
 
-    private static void Run(MainFormCommand command) => MainWindowIntegration.ExecuteCommand(command);
+    internal static void Run(MainFormCommand command) => MainWindowIntegration.ExecuteCommand(command);
 
     private static MainMenuEntry Item(string header, string icon, Action execute, bool isVisible = true, byte[]? bitmapIcon = null) =>
         new(header, icon, execute, isVisible: isVisible, bitmapIcon: bitmapIcon);
