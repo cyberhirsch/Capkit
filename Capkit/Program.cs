@@ -120,6 +120,7 @@ internal static class Program
 
     private static async Task StartApplicationAsync()
     {
+        PlatformRegistration.Initialize();
         ImageEditorIntegration.Initialize();
 
         if (ApplicationState.Settings.ShowStartScreen)

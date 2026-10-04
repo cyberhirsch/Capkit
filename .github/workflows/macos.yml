@@ -23,8 +23,14 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
+      - name: Build native bridge
+        run: native/macos/build.sh native/macos/build
+
       - name: Build
         run: dotnet build Capkit/Capkit.csproj -c Debug -p:CapkitPlatform=macos -r osx-arm64
+
+      - name: Platform smoke test
+        run: dotnet run --project tests/Capkit.PlatformSmoke -c Debug -p:CapkitPlatform=macos -r osx-arm64
 
       - name: Upload build
         uses: actions/upload-artifact@v4
