@@ -76,6 +76,11 @@ namespace Capkit.HelpersLib
 
         public static object GetValue(string path, string name = null, RegistryHive root = RegistryHive.CurrentUser, RegistryView view = RegistryView.Default)
         {
+            if (!OperatingSystem.IsWindows())
+            {
+                return null;
+            }
+
             try
             {
                 using (RegistryKey baseKey = RegistryKey.OpenBaseKey(root, view))

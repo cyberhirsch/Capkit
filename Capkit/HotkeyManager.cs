@@ -222,6 +222,19 @@ namespace Capkit
 
         public static List<HotkeySettings> GetDefaultHotkeyList()
         {
+            if (OperatingSystem.IsMacOS())
+            {
+                // Macs have no Print Screen key, and Command+Shift+3/4/5 belong to the system screenshot tool.
+                return new List<HotkeySettings>
+                {
+                    new HotkeySettings(HotkeyType.RectangleRegion, InputKey.Control | InputKey.Shift | InputKey.D4),
+                    new HotkeySettings(HotkeyType.PrintScreen, InputKey.Control | InputKey.Shift | InputKey.D3),
+                    new HotkeySettings(HotkeyType.ActiveWindow, InputKey.Control | InputKey.Shift | InputKey.D2),
+                    new HotkeySettings(HotkeyType.ScreenRecorder, InputKey.Control | InputKey.Shift | InputKey.D5),
+                    new HotkeySettings(HotkeyType.ScreenRecorderGIF, InputKey.Control | InputKey.Shift | InputKey.D6)
+                };
+            }
+
             return new List<HotkeySettings>
             {
                 new HotkeySettings(HotkeyType.RectangleRegion, InputKey.Control | InputKey.PrintScreen),

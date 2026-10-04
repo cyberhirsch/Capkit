@@ -38,6 +38,9 @@ public sealed class CapkitAvaloniaApplication : Application
 {
     public override void Initialize()
     {
+        // Shown as the application menu title on macOS.
+        Name = "Capkit";
+
         Uri baseUri = new Uri("avares://Capkit.Avalonia/");
         Resources.MergedDictionaries.Add(new ResourceInclude(baseUri)
         {
