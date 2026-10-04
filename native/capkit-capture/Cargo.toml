@@ -1,0 +1,16 @@
+[package]
+name = "capkit-capture"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+scap = "*"
+
+# scap 0.0.8 accepts windows-capture ^1.3.6, but 1.5 changed Settings::new; hold it at 1.4.x.
+[target.'cfg(windows)'.dependencies]
+windows-capture = "~1.4"
