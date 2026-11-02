@@ -44,7 +44,8 @@ namespace Capkit
         private static ScreenRecorder screenRecorder;
         private static ScreenRecordWindow recordForm;
 
-        public static async void StartStopRecording(ScreenRecordOutput outputType, ScreenRecordStartMethod startMethod, TaskSettings taskSettings)
+        public static async void StartStopRecording(ScreenRecordOutput outputType, ScreenRecordStartMethod startMethod, TaskSettings taskSettings,
+            Rectangle monitorRectangle = default)
         {
             if (IsRecording)
             {
@@ -55,7 +56,7 @@ namespace Capkit
             }
             else
             {
-                await StartRecording(outputType, taskSettings, startMethod);
+                await StartRecording(outputType, taskSettings, startMethod, monitorRectangle);
             }
         }
 
@@ -83,7 +84,8 @@ namespace Capkit
             }
         }
 
-        private static async Task StartRecording(ScreenRecordOutput outputType, TaskSettings taskSettings, ScreenRecordStartMethod startMethod = ScreenRecordStartMethod.Region)
+        private static async Task StartRecording(ScreenRecordOutput outputType, TaskSettings taskSettings, ScreenRecordStartMethod startMethod = ScreenRecordStartMethod.Region,
+            Rectangle monitorRectangle = default)
         {
             if (outputType == ScreenRecordOutput.GIF)
             {
@@ -159,6 +161,9 @@ namespace Capkit
                     break;
                 case ScreenRecordStartMethod.LastRegion:
                     captureRectangle = ApplicationState.Settings.ScreenRecordRegion;
+                    break;
+                case ScreenRecordStartMethod.Monitor:
+                    captureRectangle = monitorRectangle;
                     break;
             }
 

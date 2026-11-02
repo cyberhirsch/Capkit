@@ -198,6 +198,11 @@ internal sealed class CaptureHubView : UserControl
         tiles.Children.Add(AreaTile(LucideIcons.layers, Strings.MainMenuBuilder_LastRegion,
             _gif ? HotkeyType.StartScreenRecorderGIF : HotkeyType.StartScreenRecorder,
             () => TaskHelpers.StartScreenRecording(output, ScreenRecordStartMethod.LastRegion)));
+        Button monitor = HubUi.Tile(LucideIcons.monitor, Strings.MainMenuBuilder_Monitor, Strings.Hub_NoHotkey, false, () => { });
+        monitor.Width = 134;
+        ToolTip.SetTip(monitor, Strings.MainMenuBuilder_Monitor);
+        monitor.Click += (_, _) => ShowMonitorMenu(monitor, output);
+        tiles.Children.Add(monitor);
 
         Control format = Labeled(Strings.Hub_Format, HubUi.Segmented(
         [
@@ -246,6 +251,31 @@ internal sealed class CaptureHubView : UserControl
         if (menu.Items.Count == 0)
         {
             menu.Items.Add(new MenuItem { Header = Strings.MainMenuBuilder_NoWindowsFound, IsEnabled = false });
+        }
+
+        menu.Open(anchor);
+    }
+
+    private static void ShowMonitorMenu(Control anchor, ScreenRecordOutput output)
+    {
+        ContextMenu menu = new();
+
+        try
+        {
+            DesktopScreen[] screens = DesktopScreen.AllScreens;
+
+            for (int i = 0; i < screens.Length; i++)
+            {
+                System.Drawing.Rectangle bounds = screens[i].Bounds;
+                string label = $"{i + 1}. {bounds.Width}x{bounds.Height}" + (screens[i].Primary ? " *" : string.Empty);
+                MenuItem item = new() { Header = new TextBlock { Text = label } };
+                item.Click += (_, _) => TaskHelpers.StartScreenRecording(output, ScreenRecordStartMethod.Monitor, monitorRectangle: bounds);
+                menu.Items.Add(item);
+            }
+        }
+        catch (Exception e)
+        {
+            DebugHelper.WriteException(e);
         }
 
         menu.Open(anchor);

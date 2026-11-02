@@ -805,11 +805,12 @@ namespace Capkit
                 taskSettings);
         }
 
-        public static void StartScreenRecording(ScreenRecordOutput outputType, ScreenRecordStartMethod startMethod, TaskSettings taskSettings = null)
+        public static void StartScreenRecording(ScreenRecordOutput outputType, ScreenRecordStartMethod startMethod, TaskSettings taskSettings = null,
+            Rectangle monitorRectangle = default)
         {
             if (taskSettings == null) taskSettings = TaskSettings.GetDefaultTaskSettings();
 
-            ScreenRecordManager.StartStopRecording(outputType, startMethod, taskSettings);
+            ScreenRecordManager.StartStopRecording(outputType, startMethod, taskSettings, monitorRectangle);
         }
 
         public static void StopScreenRecording()

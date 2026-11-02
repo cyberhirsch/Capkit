@@ -193,7 +193,8 @@ namespace Capkit
         Region,
         ActiveWindow,
         CustomRegion,
-        LastRegion
+        LastRegion,
+        Monitor
     }
 
     public enum HotkeyType // Localized
